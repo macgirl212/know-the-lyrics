@@ -2,6 +2,10 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 
 const SelectSongPage: NextPage = () => {
+    console.log("game page loaded")
+
+    // song props need to connect to database
+
     return (
         <main>
             <h1>Select Song</h1>
