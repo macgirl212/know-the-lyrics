@@ -2,14 +2,14 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.scss'
 
 const Home: NextPage = () => {
   return (
-    <main>
-      <h1>Know the Lyrics</h1>
+    <main className={styles.mainContainer}>
+      <h1 className={styles.title}>Know the Lyrics</h1>
       <Link href="/select">
-        <a>Play</a>
+        <a className={styles.mainButton}>Play</a>
       </Link>
     </main>
   )
