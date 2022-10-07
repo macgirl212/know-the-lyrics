@@ -6,6 +6,4 @@ const SongSchema = new mongoose.Schema({
 	lyrics: Array,
 });
 
-const Song = mongoose.models.Song || mongoose.model('Song', SongSchema);
-
-export default Song;
+export default mongoose.models.Song || mongoose.model('Song', SongSchema);

@@ -1,10 +1,9 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import getAllSongs from '../controllers/getAllSongs'
 
 const SelectSongPage: NextPage = () => {
-    console.log("game page loaded")
-
-    // song props need to connect to database
+    getAllSongs()
 
     return (
         <main>
