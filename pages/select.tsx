@@ -1,14 +1,22 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import getAllSongs from '../controllers/getAllSongs'
+import { useState, useEffect } from 'react'
+import { getAllSongs } from '../controllers/getSongs'
 
 const SelectSongPage: NextPage = () => {
-    getAllSongs()
+    const [chosenSong, setChosenSong] = useState<string>('')
+    useEffect(() => {
+        getAllSongs()
+            .then(function(result) {
+                const randomSong = result[Math.floor(Math.random() * result.length)]
+                setChosenSong(randomSong.title)
+                sessionStorage.setItem('id', randomSong._id)
+            })
+    }, [])
 
     return (
         <main>
-            <h1>Select Song</h1>
-            <h2>Randomly chosen song title goes here</h2>
+            <h1>{chosenSong}</h1>
             <Link href="/game">
                 <a>Easy</a>
             </Link>
