@@ -1,0 +1,21 @@
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .currentLyrics {
+        height: 400px;
+        display: flex;
+        align-items: center;
+        font-size: 60px;
+    }
+
+    .gameButtonsDiv {
+        display: flex;
+        flex-direction: column;
+
+        .gameButtons {
+            padding: 20px;
+        }
+    }
+}

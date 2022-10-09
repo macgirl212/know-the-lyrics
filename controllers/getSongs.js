@@ -13,7 +13,6 @@ export const getAllSongs = async () => {
 
 export const getOneSong = async (id) => {
 	try {
-		console.log(id);
 		const res = await fetch(`/api/songs/${id}`, {
 			method: 'GET',
 		});

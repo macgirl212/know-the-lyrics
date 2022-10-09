@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { getOneSong } from '../controllers/getSongs'
+import styles from '../styles/Game.module.scss'
 
 const Game: NextPage = () => {
     const id = sessionStorage.getItem('id')
@@ -10,11 +11,13 @@ const Game: NextPage = () => {
     const [songUrl, setSongUrl] = useState<string>('')
     const [lyrics, setLyrics] = useState<string[]>([])
     const [timestamps, setTimestamps] = useState<string[]>([])
+    const [lyricIndex, setLyricIndex] = useState<number>(0)
+    const [currentLyrics, setCurrentLyrics] = useState<string>('')
 
     useEffect(() => {
+        // initial setup for current song
         getOneSong(id)
             .then(function(result) {
-                console.log(result)
                 setSongTitle(result.title)
                 setSongUrl(result.url)
                 setLyrics(result.lyrics)
@@ -22,49 +25,29 @@ const Game: NextPage = () => {
             })
     }, [])
 
-    const useAudio = (url: any) => {
-        const [audio] = useState(new Audio(url))
-        const [playing, setPlaying] = useState(false)
+    const timeUpdate = (e: any) => {
+        const currentTime = e.target.currentTime
 
-        const toggle = () => setPlaying(!playing);
-
-        useEffect(() => {
-            playing ? audio.play() : audio.pause()
-        }, [playing])
-
-        useEffect(() => {
-            audio.addEventListener('ended', () => setPlaying(false));
-            return () => {
-              audio.removeEventListener('ended', () => setPlaying(false));
-            };
-        }, []);
-
-        return [playing, toggle] as const;
-    }
-
-    const Player = () => {
-        const [playing, toggle] = useAudio(songUrl)
-
-        return (
-            <div>
-              <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
-            </div>
-        );
+        // dynamically change visible lyrics from current time
+        if (currentTime > timestamps[lyricIndex]) {
+            setCurrentLyrics(lyrics[lyricIndex])
+            setLyricIndex(lyricIndex + 1)
+        }
     }
 
     return (
-        <main>
+        <main className={styles.mainContainer}>
             <h1>{songTitle}</h1>
-            <Player />
-            <h2>Lyrics goes here</h2>
-            <Link href="/select">
-                <button>Submit answer</button>
-            </Link>
-            <br />
-            <br />
-            <Link href="/scores">
-                <a>Abandon Game</a>
-            </Link>
+            <audio src={songUrl} onTimeUpdate={(e) => timeUpdate(e)} controls />
+            <h2 className={styles.currentLyrics}>{currentLyrics}</h2>
+            <div className={styles.gameButtonsDiv}>
+                <Link href="/select">
+                    <a className={styles.gameButtons}>Submit answer</a>
+                </Link>
+                <Link href="/scores">
+                    <a className={styles.gameButtons}>Abandon Game</a>
+                </Link>
+            </div>
         </main>
     )
 }

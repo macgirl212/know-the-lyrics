@@ -18,6 +18,9 @@
 # misc
 .DS_Store
 *.pem
+allSongs.json
+populate.js
+/controllers/addSongs.js
 
 # debug
 npm-debug.log*
