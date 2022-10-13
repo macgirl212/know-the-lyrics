@@ -10,6 +10,19 @@
         font-size: 60px;
     }
 
+    .inputDiv {
+        height: 400px;
+
+        .confirmedLyrics {
+            font-size: 40px;
+            text-align: center;
+        }
+    
+        .missingLyrics {
+            font-size: 60px;
+        }
+    } 
+
     .gameButtonsDiv {
         display: flex;
         flex-direction: column;
