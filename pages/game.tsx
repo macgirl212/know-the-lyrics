@@ -22,7 +22,7 @@ const Game: NextPage = () => {
 		getOneSong(id).then(function (result) {
 			setSongTitle(result.title);
 			setSongUrl(result.url);
-			setLyrics(result.lyrics);
+			setLyrics(result.firstVerse);
 			replaceLyricWithBlanks(result.lyrics);
 			setTimestamps(result.timestamps);
 		});
