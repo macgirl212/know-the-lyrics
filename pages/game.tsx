@@ -30,19 +30,31 @@ const Game: NextPage = () => {
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>) => {
 		// store correct answer
-		const lastLineIndex = lyrics.length - 1;
+		let lastLineIndex = Math.floor(
+			Math.random() *
+				(lyrics.length >= 4
+					? lyrics.length - 1
+					: lyrics.length >= 8
+					? lyrics.length - 8
+					: 11) +
+				5
+		);
+		if (lastLineIndex > lyrics.length) {
+			lastLineIndex = lyrics.length - 1;
+		}
 
 		const correctAnswer = lyrics[lastLineIndex];
 
 		setAnswer(correctAnswer);
-
+		console.log(correctAnswer);
 		// regex captures all but first word
 		const blankLyricsRegex = /(^\S*\s*)?\S/g;
 
-		const blankLyrics = correctAnswer.replace(blankLyricsRegex, `$1_`);
+		const blankLyrics = correctAnswer
+			.toString()
+			.replace(blankLyricsRegex, `$1_`);
 
-		lyrics.pop();
-		lyrics.push(blankLyrics);
+		lyrics.splice(lastLineIndex, 1, blankLyrics);
 	};
 
 	const timeUpdate = (e: any) => {
@@ -54,6 +66,7 @@ const Game: NextPage = () => {
 			setLyricIndex(lyricIndex + 1);
 		}
 
+		/*
 		if (lyricIndex == lyrics.length) {
 			// this should pause the song
 
@@ -62,6 +75,7 @@ const Game: NextPage = () => {
 				setIsAnswerToFill(true);
 			}, 5000);
 		}
+		*/
 	};
 
 	const revealAnswer = () => {
