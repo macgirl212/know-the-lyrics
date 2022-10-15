@@ -22,8 +22,8 @@ const Game: NextPage = () => {
 		getOneSong(id).then(function (result) {
 			setSongTitle(result.title);
 			setSongUrl(result.url);
-			setLyrics(result.firstVerse);
-			replaceLyricWithBlanks(result.lyrics);
+			setLyrics(result.lyrics[0].firstVerse);
+			replaceLyricWithBlanks(result.lyrics[0].firstVerse);
 			setTimestamps(result.timestamps);
 		});
 	}, []);

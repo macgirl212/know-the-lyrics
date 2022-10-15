@@ -1,14 +1,6 @@
 import mongoose from 'mongoose';
 
-const SongSchema = new mongoose.Schema({
-	title: {
-		type: String,
-		required: true,
-	},
-	url: {
-		type: String,
-		required: true,
-	},
+const LyricSchema = new mongoose.Schema({
 	firstVerse: {
 		type: [String],
 		required: true,
@@ -28,6 +20,21 @@ const SongSchema = new mongoose.Schema({
 	bridge: {
 		type: [String],
 		required: false,
+	},
+});
+
+const SongSchema = new mongoose.Schema({
+	title: {
+		type: String,
+		required: true,
+	},
+	url: {
+		type: String,
+		required: true,
+	},
+	lyrics: {
+		type: [LyricSchema],
+		required: true,
 	},
 	timestamps: {
 		type: [Number],

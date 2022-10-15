@@ -7,7 +7,7 @@ import populate from '../controllers/populate';
 
 const Home: NextPage = () => {
 	/* this function is used to populate database from external json file; only uncomment when adjusting database */
-	// populate()
+	// populate();
 
 	return (
 		<main className={styles.mainContainer}>
