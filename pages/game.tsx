@@ -12,6 +12,7 @@ const Game: NextPage = () => {
 	const [songUrl, setSongUrl] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [answer, setAnswer] = useState<string>('');
+	const [userAnswer, setUserAnswer] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -65,22 +66,31 @@ const Game: NextPage = () => {
 			setCurrentLyrics(lyrics[lyricIndex]);
 			setLyricIndex(lyricIndex + 1);
 		}
-
-		/*
-		if (lyricIndex == lyrics.length) {
-			// this should pause the song
-
-			// wait 5 seconds to show input
-			setTimeout(() => {
-				setIsAnswerToFill(true);
-			}, 5000);
-		}
-		*/
 	};
 
 	const revealAnswer = () => {
-		setCurrentLyrics(answer);
-		setIsAnswerToFill(false);
+		if (isAnswerToFill == false) {
+			// render input to fill user's answer
+			setIsAnswerToFill(true);
+		} else {
+			// compare if user input is the correct answer
+			const formattedAnswer = answer.replace(/[^\w +-]/g, '');
+			const userFormattedAnswer = `${
+				currentLyrics.split(' ')[0]
+			} ${userAnswer}`;
+			if (formattedAnswer == userFormattedAnswer) {
+				console.log('correct answer');
+			} else {
+				console.log('wrong answer');
+			}
+
+			setCurrentLyrics(answer);
+			setIsAnswerToFill(false);
+		}
+	};
+
+	const handleChange = (event: any) => {
+		setUserAnswer(event.target.value);
 	};
 
 	return (
@@ -92,7 +102,12 @@ const Game: NextPage = () => {
 					<h2 className={styles.confirmedLyrics}>
 						{currentLyrics.split(' ')[0]}
 					</h2>
-					<input type="text" className={styles.missingLyrics} />
+					<input
+						type="text"
+						className={styles.missingLyrics}
+						onChange={handleChange}
+						value={userAnswer}
+					/>
 				</div>
 			) : (
 				<h2 className={styles.currentLyrics}>{currentLyrics}</h2>
