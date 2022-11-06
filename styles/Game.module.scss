@@ -10,6 +10,20 @@
         font-size: 60px;
     }
 
+    .correctLyrics {
+        color: green;
+    }
+
+    .incorrectLyrics {
+        color: red;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .neutralLyrics {
+            color: white;
+        }
+    }
+
     .inputDiv {
         height: 400px;
 

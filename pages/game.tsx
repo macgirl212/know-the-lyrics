@@ -8,19 +8,23 @@ const Game: NextPage = () => {
 	const id = sessionStorage.getItem('id');
 	const difficulty = sessionStorage.getItem('difficulty');
 
+	// song info states
+	const [answer, setAnswer] = useState<string>('');
+	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [songTitle, setSongTitle] = useState<string>('');
 	const [songUrl, setSongUrl] = useState<string>('');
-	const [lyrics, setLyrics] = useState<string[]>([]);
-	const [answer, setAnswer] = useState<string>('');
-	const [userInput, setUserInput] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
-	const [lyricIndex, setLyricIndex] = useState<number>(0);
+
+	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
 	const [isAnswerToFill, setIsAnswerToFill] = useState<boolean>(false);
+	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
+	const [lyricIndex, setLyricIndex] = useState<number>(0);
+	const [userInput, setUserInput] = useState<string>('');
 
 	useEffect(() => {
 		// initial setup for current song
-		getOneSong(id).then(function (result) {
+		getOneSong(id).then((result) => {
 			setSongTitle(result.title);
 			setSongUrl(result.url);
 			setLyrics(result.lyrics[0].firstVerse);
@@ -47,7 +51,6 @@ const Game: NextPage = () => {
 		const correctAnswer = lyrics[lastLineIndex];
 
 		setAnswer(correctAnswer);
-		console.log(correctAnswer);
 		// regex captures all but first word
 		const blankLyricsRegex = /(^\S*\s*)?\S/g;
 
@@ -77,9 +80,9 @@ const Game: NextPage = () => {
 			const formattedAnswer = answer.replace(/[^\w +-]/g, '');
 			const userFormattedAnswer = `${currentLyrics.split(' ')[0]} ${userInput}`;
 			if (formattedAnswer == userFormattedAnswer) {
-				console.log('correct answer');
+				setTypeOfLyrics('correct');
 			} else {
-				console.log('wrong answer');
+				setTypeOfLyrics('incorrect');
 			}
 
 			setCurrentLyrics(answer);
@@ -108,7 +111,21 @@ const Game: NextPage = () => {
 					/>
 				</div>
 			) : (
-				<h2 className={styles.currentLyrics}>{currentLyrics}</h2>
+				<>
+					{typeOfLyrics === 'correct' ? (
+						<h2 className={`${styles.currentLyrics} ${styles.correctLyrics}`}>
+							{currentLyrics}
+						</h2>
+					) : typeOfLyrics === 'incorrect' ? (
+						<h2 className={`${styles.currentLyrics} ${styles.incorrectLyrics}`}>
+							{currentLyrics}
+						</h2>
+					) : (
+						<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
+							{currentLyrics}
+						</h2>
+					)}
+				</>
 			)}
 			<div className={styles.gameButtonsDiv}>
 				<button className={styles.gameButtons} onClick={revealAnswer}>
