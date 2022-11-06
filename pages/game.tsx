@@ -12,7 +12,7 @@ const Game: NextPage = () => {
 	const [songUrl, setSongUrl] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [answer, setAnswer] = useState<string>('');
-	const [userAnswer, setUserAnswer] = useState<string>('');
+	const [userInput, setUserInput] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -75,9 +75,7 @@ const Game: NextPage = () => {
 		} else {
 			// compare if user input is the correct answer
 			const formattedAnswer = answer.replace(/[^\w +-]/g, '');
-			const userFormattedAnswer = `${
-				currentLyrics.split(' ')[0]
-			} ${userAnswer}`;
+			const userFormattedAnswer = `${currentLyrics.split(' ')[0]} ${userInput}`;
 			if (formattedAnswer == userFormattedAnswer) {
 				console.log('correct answer');
 			} else {
@@ -90,7 +88,7 @@ const Game: NextPage = () => {
 	};
 
 	const handleChange = (event: any) => {
-		setUserAnswer(event.target.value);
+		setUserInput(event.target.value);
 	};
 
 	return (
@@ -106,7 +104,7 @@ const Game: NextPage = () => {
 						type="text"
 						className={styles.missingLyrics}
 						onChange={handleChange}
-						value={userAnswer}
+						value={userInput}
 					/>
 				</div>
 			) : (
