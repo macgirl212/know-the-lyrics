@@ -22,15 +22,21 @@ const Game: NextPage = () => {
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [userInput, setUserInput] = useState<string>('');
 
+	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
 	useEffect(() => {
 		// initial setup for current song
-		getOneSong(id).then((result) => {
-			setSongTitle(result.title);
-			setSongUrl(result.url);
-			setLyrics(result.lyrics[0].firstVerse);
-			replaceLyricWithBlanks(result.lyrics[0].firstVerse);
-			setTimestamps(result.timestamps);
-		});
+		getOneSong(id)
+			.then((result) => {
+				setSongTitle(result.title);
+				setSongUrl(result.url);
+				setLyrics(result.lyrics[0].firstVerse);
+				replaceLyricWithBlanks(result.lyrics[0].firstVerse);
+				setTimestamps(result.timestamps);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>) => {
@@ -69,6 +75,11 @@ const Game: NextPage = () => {
 			setCurrentLyrics(lyrics[lyricIndex]);
 			setLyricIndex(lyricIndex + 1);
 		}
+
+		if (currentTime > timestamps[lyrics.length - 1]) {
+			setIsPlaying(false);
+			console.log('last line');
+		}
 	};
 
 	const revealAnswer = () => {
@@ -97,7 +108,14 @@ const Game: NextPage = () => {
 	return (
 		<main className={styles.mainContainer}>
 			<h1>{songTitle}</h1>
-			<audio src={songUrl} onTimeUpdate={(e) => timeUpdate(e)} controls />
+			<audio
+				src={songUrl}
+				onPlay={() => {
+					setIsPlaying(true);
+				}}
+				onTimeUpdate={(e) => timeUpdate(e)}
+				controls
+			/>
 			{isAnswerToFill ? (
 				<div className={styles.inputDiv}>
 					<h2 className={styles.confirmedLyrics}>
