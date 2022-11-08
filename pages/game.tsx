@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { getOneSong } from '../controllers/getSongs';
 import styles from '../styles/Game.module.scss';
 
@@ -22,7 +22,10 @@ const Game: NextPage = () => {
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [userInput, setUserInput] = useState<string>('');
 
+	const [isEndOfSong, setIsEndOfSong] = useState<boolean>(false);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+	const audioRef = useRef(new Audio());
 
 	useEffect(() => {
 		// initial setup for current song
@@ -67,6 +70,15 @@ const Game: NextPage = () => {
 		lyrics.splice(lastLineIndex, 1, blankLyrics);
 	};
 
+	const togglePlay = () => {
+		if (isPlaying) {
+			audioRef.current.pause();
+		} else {
+			audioRef.current.play();
+		}
+		setIsPlaying(!isPlaying);
+	};
+
 	const timeUpdate = (e: any) => {
 		const currentTime = e.target.currentTime;
 
@@ -76,9 +88,11 @@ const Game: NextPage = () => {
 			setLyricIndex(lyricIndex + 1);
 		}
 
-		if (currentTime > timestamps[lyrics.length - 1]) {
+		// pauses the music at the last lyric
+		if (currentTime > timestamps[lyrics.length - 1] + 1) {
+			setIsEndOfSong(true);
 			setIsPlaying(false);
-			console.log('last line');
+			audioRef.current.pause();
 		}
 	};
 
@@ -114,7 +128,7 @@ const Game: NextPage = () => {
 					setIsPlaying(true);
 				}}
 				onTimeUpdate={(e) => timeUpdate(e)}
-				controls
+				ref={audioRef}
 			/>
 			{isAnswerToFill ? (
 				<div className={styles.inputDiv}>
@@ -146,9 +160,15 @@ const Game: NextPage = () => {
 				</>
 			)}
 			<div className={styles.gameButtonsDiv}>
-				<button className={styles.gameButtons} onClick={revealAnswer}>
-					Submit Answer
-				</button>
+				{isEndOfSong ? (
+					<button className={styles.gameButtons} onClick={revealAnswer}>
+						Submit Answer
+					</button>
+				) : (
+					<button className={styles.gameButtons} onClick={togglePlay}>
+						{isPlaying ? 'Pause' : 'Play'}
+					</button>
+				)}
 				<Link href="/select">
 					<a className={styles.gameButtons}>Next Song</a>
 				</Link>
