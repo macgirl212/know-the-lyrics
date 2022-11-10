@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
+import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
+import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import { getOneSong } from '../controllers/getSongs';
 import styles from '../styles/Game.module.scss';
 
@@ -18,12 +20,12 @@ const Game: NextPage = () => {
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
 	const [isAnswerToFill, setIsAnswerToFill] = useState<boolean>(false);
-	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
-	const [lyricIndex, setLyricIndex] = useState<number>(0);
-	const [userInput, setUserInput] = useState<string>('');
-
 	const [isEndOfSong, setIsEndOfSong] = useState<boolean>(false);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+	const [lyricIndex, setLyricIndex] = useState<number>(0);
+	const [splitIndex, setSplitIndex] = useState<number>(-3);
+	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
+	const [userInput, setUserInput] = useState<string>('');
 
 	const audioRef = useRef(new Audio());
 
@@ -44,28 +46,11 @@ const Game: NextPage = () => {
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>) => {
 		// store correct answer
-		let lastLineIndex = Math.floor(
-			Math.random() *
-				(lyrics.length >= 4
-					? lyrics.length - 1
-					: lyrics.length >= 8
-					? lyrics.length - 8
-					: 11) +
-				5
-		);
-		if (lastLineIndex > lyrics.length) {
-			lastLineIndex = lyrics.length - 1;
-		}
-
+		const lastLineIndex = chooseLastLineIndex(lyrics);
 		const correctAnswer = lyrics[lastLineIndex];
-
 		setAnswer(correctAnswer);
-		// regex captures all but first word
-		const blankLyricsRegex = /(^\S*\s*)?\S/g;
 
-		const blankLyrics = correctAnswer
-			.toString()
-			.replace(blankLyricsRegex, `$1_`);
+		const blankLyrics = convertWordsToBlanks(correctAnswer, splitIndex);
 
 		lyrics.splice(lastLineIndex, 1, blankLyrics);
 	};
@@ -103,7 +88,10 @@ const Game: NextPage = () => {
 		} else {
 			// compare if user input is the correct answer
 			const formattedAnswer = answer.replace(/[^\w +-]/g, '');
-			const userFormattedAnswer = `${currentLyrics.split(' ')[0]} ${userInput}`;
+			const userFormattedAnswer = `${currentLyrics
+				.split(' ')
+				.slice(0, splitIndex)
+				.join(' ')} ${userInput}`;
 			if (formattedAnswer == userFormattedAnswer) {
 				setTypeOfLyrics('correct');
 			} else {
@@ -133,7 +121,7 @@ const Game: NextPage = () => {
 			{isAnswerToFill ? (
 				<div className={styles.inputDiv}>
 					<h2 className={styles.confirmedLyrics}>
-						{currentLyrics.split(' ')[0]}
+						{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
 					</h2>
 					<input
 						type="text"
