@@ -23,7 +23,9 @@ const Game: NextPage = () => {
 	const [isEndOfSong, setIsEndOfSong] = useState<boolean>(false);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
-	const [splitIndex, setSplitIndex] = useState<number>(-3);
+	const [splitIndex, setSplitIndex] = useState<number>(
+		difficulty === 'easy' ? -3 : 1
+	);
 	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
 	const [userInput, setUserInput] = useState<string>('');
 
