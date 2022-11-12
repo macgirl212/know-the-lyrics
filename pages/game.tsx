@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
+import validateAnswer from '../controllers/validateAnswer';
 import { getOneSong } from '../controllers/getSongs';
 import styles from '../styles/Game.module.scss';
 
@@ -88,19 +89,15 @@ const Game: NextPage = () => {
 			// render input to fill user's answer
 			setIsAnswerToFill(true);
 		} else {
-			// compare if user input is the correct answer
-			const formattedAnswer = answer.replace(/[^\w +-]/g, '');
-			const userFormattedAnswer = `${currentLyrics
-				.split(' ')
-				.slice(0, splitIndex)
-				.join(' ')} ${userInput}`;
-			if (formattedAnswer == userFormattedAnswer) {
-				setTypeOfLyrics('correct');
-			} else {
-				setTypeOfLyrics('incorrect');
-			}
+			const finalAnswer = validateAnswer(
+				answer,
+				currentLyrics,
+				splitIndex,
+				userInput
+			);
 
-			setCurrentLyrics(answer);
+			setTypeOfLyrics('final answer');
+			setCurrentLyrics(finalAnswer);
 			setIsAnswerToFill(false);
 		}
 	};
@@ -134,14 +131,11 @@ const Game: NextPage = () => {
 				</div>
 			) : (
 				<>
-					{typeOfLyrics === 'correct' ? (
-						<h2 className={`${styles.currentLyrics} ${styles.correctLyrics}`}>
-							{currentLyrics}
-						</h2>
-					) : typeOfLyrics === 'incorrect' ? (
-						<h2 className={`${styles.currentLyrics} ${styles.incorrectLyrics}`}>
-							{currentLyrics}
-						</h2>
+					{typeOfLyrics === 'final answer' ? (
+						<h2
+							className={styles.currentLyrics}
+							dangerouslySetInnerHTML={{ __html: currentLyrics }}
+						/>
 					) : (
 						<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
 							{currentLyrics}

@@ -8,14 +8,10 @@
         display: flex;
         align-items: center;
         font-size: 60px;
-    }
 
-    .correctLyrics {
-        color: green;
-    }
-
-    .incorrectLyrics {
-        color: red;
+        span {
+            white-space: pre-wrap;
+        }
     }
 
     @media (prefers-color-scheme: dark) {
