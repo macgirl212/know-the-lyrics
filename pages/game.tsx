@@ -39,7 +39,7 @@ const Game: NextPage = () => {
 				setSongTitle(result.title);
 				setSongUrl(result.url);
 				setLyrics(result.lyrics[0].firstVerse);
-				replaceLyricWithBlanks(result.lyrics[0].firstVerse);
+				replaceLyricWithBlanks(result.lyrics[0].firstVerse, difficulty);
 				setTimestamps(result.timestamps);
 			})
 			.catch((err) => {
@@ -47,15 +47,18 @@ const Game: NextPage = () => {
 			});
 	}, []);
 
-	const replaceLyricWithBlanks = (lyrics: Array<string>) => {
+	const replaceLyricWithBlanks = (lyrics: Array<string>, difficulty: any) => {
 		// store correct answer
-		const lastLineIndex = chooseLastLineIndex(lyrics);
+		const lastLineIndex = chooseLastLineIndex(lyrics, difficulty);
 		const correctAnswer = lyrics[lastLineIndex];
 		setAnswer(correctAnswer);
 
+		// convert some words in selected line to blanks
 		const blankLyrics = convertWordsToBlanks(correctAnswer, splitIndex);
 
-		lyrics.splice(lastLineIndex, 1, blankLyrics);
+		// splice lyrics array at chosen index and insert the chosen line
+		lyrics.splice(lastLineIndex);
+		lyrics.push(blankLyrics);
 	};
 
 	const togglePlay = () => {
@@ -144,14 +147,18 @@ const Game: NextPage = () => {
 				</>
 			)}
 			<div className={styles.gameButtonsDiv}>
-				{isEndOfSong ? (
-					<button className={styles.gameButtons} onClick={revealAnswer}>
-						Submit Answer
-					</button>
-				) : (
-					<button className={styles.gameButtons} onClick={togglePlay}>
-						{isPlaying ? 'Pause' : 'Play'}
-					</button>
+				{typeOfLyrics === 'final answer' ? null : (
+					<>
+						{isEndOfSong ? (
+							<button className={styles.gameButtons} onClick={revealAnswer}>
+								Submit Answer
+							</button>
+						) : (
+							<button className={styles.gameButtons} onClick={togglePlay}>
+								{isPlaying ? 'Pause' : 'Play'}
+							</button>
+						)}
+					</>
 				)}
 				<Link href="/select">
 					<a className={styles.gameButtons}>Next Song</a>

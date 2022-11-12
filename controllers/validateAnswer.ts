@@ -1,5 +1,6 @@
 const validateAnswer = (answer: string, currentLyrics: string, splitIndex: number, userInput: string) => {
     // compare if user input is the correct answer
+    /* needs refining to include words with apostrophes */
     const formattedAnswer = answer.replace(/[^\w +-]/g, '').split(' ');
     const userFormattedAnswer = `${currentLyrics
         .replace(/[^\w +-]/g, '')
