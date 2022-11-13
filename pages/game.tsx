@@ -36,11 +36,12 @@ const Game: NextPage = () => {
 		// initial setup for current song
 		getOneSong(id)
 			.then((result) => {
+				console.log(result);
 				setSongTitle(result.title);
 				setSongUrl(result.url);
-				setLyrics(result.lyrics[0].firstVerse);
-				replaceLyricWithBlanks(result.lyrics[0].firstVerse, difficulty);
-				setTimestamps(result.timestamps);
+				setLyrics(result.verses[0]);
+				replaceLyricWithBlanks(result.verses[0], difficulty);
+				setTimestamps(result.verseTimestamps[0]);
 			})
 			.catch((err) => {
 				console.log(err);

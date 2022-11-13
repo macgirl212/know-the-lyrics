@@ -8,6 +8,7 @@ const SelectSongPage: NextPage = () => {
 
 	useEffect(() => {
 		getAllSongs().then(function (result) {
+			console.log(result);
 			const randomSong = result[Math.floor(Math.random() * result.length)];
 			setChosenSong(randomSong.title);
 			sessionStorage.setItem('id', randomSong._id);
