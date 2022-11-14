@@ -10,6 +10,7 @@ import styles from '../styles/Game.module.scss';
 const Game: NextPage = () => {
 	const id = sessionStorage.getItem('id');
 	const difficulty = sessionStorage.getItem('difficulty');
+	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
 	// song info states
 	const [answer, setAnswer] = useState<string>('');
@@ -36,12 +37,30 @@ const Game: NextPage = () => {
 		// initial setup for current song
 		getOneSong(id)
 			.then((result) => {
-				console.log(result);
 				setSongTitle(result.title);
 				setSongUrl(result.url);
-				setLyrics(result.verses[0]);
-				replaceLyricWithBlanks(result.verses[0], difficulty);
-				setTimestamps(result.verseTimestamps[0]);
+
+				if (selectedSection !== -1) {
+					// if a verse is selected, load the appropriate data
+					setLyrics(result.verses[selectedSection]);
+					replaceLyricWithBlanks(result.verses[selectedSection], difficulty);
+					setTimestamps(result.verseTimestamps[selectedSection]);
+
+					if (selectedSection === 0) {
+						// if the first verse is selected, start the audio from the beginning
+						audioRef.current.currentTime = 0;
+					} else {
+						// if another verse is selected, start the audio five seconds before the first lyric
+						audioRef.current.currentTime =
+							result.verseTimestamps[selectedSection][0] - 5;
+					}
+				} else {
+					// if the chorus is selected, start the audio five seconds before the first lyric
+					setLyrics(result.chorus);
+					replaceLyricWithBlanks(result.chorus, difficulty);
+					setTimestamps(result.chorusTimestamps);
+					audioRef.current.currentTime = result.chorusTimestamps[0] - 5;
+				}
 			})
 			.catch((err) => {
 				console.log(err);

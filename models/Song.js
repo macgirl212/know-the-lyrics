@@ -27,7 +27,7 @@ const SongSchema = new mongoose.Schema({
 		required: true,
 	},
 	chorusTimestamps: {
-		type: [Array],
+		type: [Number],
 		required: false,
 	},
 	hasChorus: {

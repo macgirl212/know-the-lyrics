@@ -5,12 +5,15 @@ import { getAllSongs } from '../controllers/getSongs';
 
 const SelectSongPage: NextPage = () => {
 	const [chosenSong, setChosenSong] = useState<string>('');
+	const [chosenSongVerses, setChosenSongVerses] = useState(0);
+	const [chosenSongHasChorus, setChosenSongHasChorus] = useState<boolean>();
 
 	useEffect(() => {
 		getAllSongs().then(function (result) {
-			console.log(result);
 			const randomSong = result[Math.floor(Math.random() * result.length)];
 			setChosenSong(randomSong.title);
+			setChosenSongVerses(randomSong.verses.length);
+			setChosenSongHasChorus(randomSong.hasChorus);
 			sessionStorage.setItem('id', randomSong._id);
 		});
 	}, []);
@@ -21,7 +24,15 @@ const SelectSongPage: NextPage = () => {
 			<Link href="/game">
 				<a
 					onClick={() => {
+						let selectedSection = 0;
+						if (chosenSongHasChorus) {
+							selectedSection = Math.floor(Math.random()) - 1;
+						}
 						sessionStorage.setItem('difficulty', 'easy');
+						sessionStorage.setItem(
+							'selectedSection',
+							selectedSection.toString()
+						);
 					}}
 				>
 					Easy
@@ -31,7 +42,15 @@ const SelectSongPage: NextPage = () => {
 			<Link href="/game">
 				<a
 					onClick={() => {
+						let selectedSection = Math.floor(Math.random() * chosenSongVerses);
+						if (chosenSongHasChorus) {
+							selectedSection -= 1;
+						}
 						sessionStorage.setItem('difficulty', 'hard');
+						sessionStorage.setItem(
+							'selectedSection',
+							selectedSection.toString()
+						);
 					}}
 				>
 					Hard
