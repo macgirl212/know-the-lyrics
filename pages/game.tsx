@@ -15,6 +15,7 @@ const Game: NextPage = () => {
 	// song info states
 	const [answer, setAnswer] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
+	const [section, setSection] = useState<string>('');
 	const [songTitle, setSongTitle] = useState<string>('');
 	const [songUrl, setSongUrl] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
@@ -61,11 +62,29 @@ const Game: NextPage = () => {
 					setTimestamps(result.chorusTimestamps);
 					audioRef.current.currentTime = result.chorusTimestamps[0] - 5;
 				}
+				setSubtitle();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	}, []);
+
+	const setSubtitle = () => {
+		switch (selectedSection) {
+			case -1:
+				setSection('Chorus');
+				break;
+			case 0:
+				setSection('1st Verse');
+				break;
+			case 1:
+				setSection('2nd Verse');
+				break;
+			case 2:
+				setSection('3rd Verse');
+				break;
+		}
+	};
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>, difficulty: any) => {
 		// store correct answer
@@ -132,6 +151,7 @@ const Game: NextPage = () => {
 	return (
 		<main className={styles.mainContainer}>
 			<h1>{songTitle}</h1>
+			<h2>{section}</h2>
 			<audio
 				src={songUrl}
 				onPlay={() => {
