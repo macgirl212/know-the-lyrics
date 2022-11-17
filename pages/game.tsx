@@ -7,6 +7,8 @@ import validateAnswer from '../controllers/validateAnswer';
 import { getOneSong } from '../controllers/getSongs';
 import styles from '../styles/Game.module.scss';
 
+import Title from '../components/Title';
+
 const Game: NextPage = () => {
 	const id = sessionStorage.getItem('id');
 	const difficulty = sessionStorage.getItem('difficulty');
@@ -149,65 +151,67 @@ const Game: NextPage = () => {
 	};
 
 	return (
-		<main className={styles.mainContainer}>
-			<h1>{songTitle}</h1>
-			<h2>{section}</h2>
-			<audio
-				src={songUrl}
-				onPlay={() => {
-					setIsPlaying(true);
-				}}
-				onTimeUpdate={(e) => timeUpdate(e)}
-				ref={audioRef}
-			/>
-			{isAnswerToFill ? (
-				<div className={styles.inputDiv}>
-					<h2 className={styles.confirmedLyrics}>
-						{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
-					</h2>
-					<input
-						type="text"
-						className={styles.missingLyrics}
-						onChange={handleChange}
-						value={userInput}
-					/>
-				</div>
-			) : (
-				<>
-					{typeOfLyrics === 'final answer' ? (
-						<h2
-							className={styles.currentLyrics}
-							dangerouslySetInnerHTML={{ __html: currentLyrics }}
-						/>
-					) : (
-						<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
-							{currentLyrics}
+		<>
+			<Title title={songTitle} />
+			<main className={styles.mainContainer}>
+				<h2>{section}</h2>
+				<audio
+					src={songUrl}
+					onPlay={() => {
+						setIsPlaying(true);
+					}}
+					onTimeUpdate={(e) => timeUpdate(e)}
+					ref={audioRef}
+				/>
+				{isAnswerToFill ? (
+					<div className={styles.inputDiv}>
+						<h2 className={styles.confirmedLyrics}>
+							{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
 						</h2>
-					)}
-				</>
-			)}
-			<div className={styles.gameButtonsDiv}>
-				{typeOfLyrics === 'final answer' ? null : (
+						<input
+							type="text"
+							className={styles.missingLyrics}
+							onChange={handleChange}
+							value={userInput}
+						/>
+					</div>
+				) : (
 					<>
-						{isEndOfSong ? (
-							<button className={styles.gameButtons} onClick={revealAnswer}>
-								Submit Answer
-							</button>
+						{typeOfLyrics === 'final answer' ? (
+							<h2
+								className={styles.currentLyrics}
+								dangerouslySetInnerHTML={{ __html: currentLyrics }}
+							/>
 						) : (
-							<button className={styles.gameButtons} onClick={togglePlay}>
-								{isPlaying ? 'Pause' : 'Play'}
-							</button>
+							<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
+								{currentLyrics}
+							</h2>
 						)}
 					</>
 				)}
-				<Link href="/select">
-					<a className={styles.gameButtons}>Next Song</a>
-				</Link>
-				<Link href="/scores">
-					<a className={styles.gameButtons}>Abandon Game</a>
-				</Link>
-			</div>
-		</main>
+				<div className={styles.gameButtonsDiv}>
+					{typeOfLyrics === 'final answer' ? null : (
+						<>
+							{isEndOfSong ? (
+								<button className={styles.gameButtons} onClick={revealAnswer}>
+									Submit Answer
+								</button>
+							) : (
+								<button className={styles.gameButtons} onClick={togglePlay}>
+									{isPlaying ? 'Pause' : 'Play'}
+								</button>
+							)}
+						</>
+					)}
+					<Link href="/select">
+						<a className={styles.gameButtons}>Next Song</a>
+					</Link>
+					<Link href="/scores">
+						<a className={styles.gameButtons}>Abandon Game</a>
+					</Link>
+				</div>
+			</main>
+		</>
 	);
 };
 

@@ -1,0 +1,17 @@
+// VARIABLES
+$accent-color-1: #6F2DBD;
+// $accent-color-2: #F6F740;
+// $base-color: #A663CC;
+// $background-color: #C1BFC0;
+// $text-color-1: #191102;
+
+.container {
+    padding: 0.3em 0;
+    width: 100%;
+    background-color: $accent-color-1;
+    
+    h1 {
+      font-size: 2em;
+      text-align: center;
+    }
+}

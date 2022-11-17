@@ -1,7 +1,15 @@
+/* VARIABLES */
+// $accent-color-1: #6F2DBD;
+// $accent-color-2: #F6F740;
+$base-color: #A663CC;
+// $background-color: #C1BFC0;
+// $text-color-1: #191102;
+
 .mainContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: $base-color;
 
     .currentLyrics {
         height: 400px;
@@ -11,12 +19,6 @@
 
         span {
             white-space: pre-wrap;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        .neutralLyrics {
-            color: white;
         }
     }
 

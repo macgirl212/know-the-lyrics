@@ -1,13 +1,22 @@
+/* VARIABLES */
+// $accent-color-1: #6F2DBD;
+// $accent-color-2: #F6F740;
+$base-color: #A663CC;
+// $background-color: #C1BFC0;
+// $text-color-1: #191102;
+
+.title {
+  margin-top: 3em;
+  margin-bottom: 3em;
+  font-size: 4em;
+  text-align: center;
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .title {
-    margin-top: 3em;
-    margin-bottom: 3em;
-    font-size: 4em;
-  }
+  background-color: $base-color;
   
   .mainButton {
     font-size: 2.5em;
@@ -17,4 +26,3 @@
     background-color: grey;
   }
 }
-
