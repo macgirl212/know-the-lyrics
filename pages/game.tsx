@@ -1,16 +1,16 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
+import useGlobalStates from '../AppContext';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
-import { getOneSong } from '../controllers/getSongs';
 import styles from '../styles/Game.module.scss';
 
 import Title from '../components/Title';
 
 const Game: NextPage = () => {
-	const id = sessionStorage.getItem('id');
+	const { currentSong } = useGlobalStates();
 	const difficulty = sessionStorage.getItem('difficulty');
 	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
@@ -18,8 +18,6 @@ const Game: NextPage = () => {
 	const [answer, setAnswer] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [section, setSection] = useState<string>('');
-	const [songTitle, setSongTitle] = useState<string>('');
-	const [songUrl, setSongUrl] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
 
 	// game states
@@ -38,37 +36,28 @@ const Game: NextPage = () => {
 
 	useEffect(() => {
 		// initial setup for current song
-		getOneSong(id)
-			.then((result) => {
-				setSongTitle(result.title);
-				setSongUrl(result.url);
+		if (selectedSection !== -1) {
+			// if a verse is selected, load the appropriate data
+			setLyrics(currentSong.verses[selectedSection]);
+			replaceLyricWithBlanks(currentSong.verses[selectedSection], difficulty);
+			setTimestamps(currentSong.verseTimestamps[selectedSection]);
 
-				if (selectedSection !== -1) {
-					// if a verse is selected, load the appropriate data
-					setLyrics(result.verses[selectedSection]);
-					replaceLyricWithBlanks(result.verses[selectedSection], difficulty);
-					setTimestamps(result.verseTimestamps[selectedSection]);
-
-					if (selectedSection === 0) {
-						// if the first verse is selected, start the audio from the beginning
-						audioRef.current.currentTime = 0;
-					} else {
-						// if another verse is selected, start the audio five seconds before the first lyric
-						audioRef.current.currentTime =
-							result.verseTimestamps[selectedSection][0] - 5;
-					}
-				} else {
-					// if the chorus is selected, start the audio five seconds before the first lyric
-					setLyrics(result.chorus);
-					replaceLyricWithBlanks(result.chorus, difficulty);
-					setTimestamps(result.chorusTimestamps);
-					audioRef.current.currentTime = result.chorusTimestamps[0] - 5;
-				}
-				setSubtitle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+			if (selectedSection === 0) {
+				// if the first verse is selected, start the audio from the beginning
+				audioRef.current.currentTime = 0;
+			} else {
+				// if another verse is selected, start the audio five seconds before the first lyric
+				audioRef.current.currentTime =
+					currentSong.verseTimestamps[selectedSection][0] - 5;
+			}
+		} else {
+			// if the chorus is selected, start the audio five seconds before the first lyric
+			setLyrics(currentSong.chorus);
+			replaceLyricWithBlanks(currentSong.chorus, difficulty);
+			setTimestamps(currentSong.chorusTimestamps);
+			audioRef.current.currentTime = currentSong.chorusTimestamps[0] - 5;
+		}
+		setSubtitle();
 	}, []);
 
 	const setSubtitle = () => {
@@ -152,11 +141,11 @@ const Game: NextPage = () => {
 
 	return (
 		<>
-			<Title title={songTitle} />
+			<Title title={currentSong.title} />
 			<main className={styles.mainContainer}>
 				<h2>{section}</h2>
 				<audio
-					src={songUrl}
+					src={currentSong.url}
 					onPlay={() => {
 						setIsPlaying(true);
 					}}

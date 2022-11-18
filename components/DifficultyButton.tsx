@@ -3,19 +3,19 @@ import chooseRandomSongSection from '../controllers/chooseRandomSongSection';
 
 interface DifficultyButtonProps {
 	difficulty: string;
-	chosenSongHasChorus: boolean;
-	chosenSongVerses: number;
+	hasChorus: boolean;
+	verses: number;
 }
 
 const DifficultyButton = ({
 	difficulty,
-	chosenSongHasChorus,
-	chosenSongVerses,
+	hasChorus,
+	verses,
 }: DifficultyButtonProps) => {
 	const selectedSection = chooseRandomSongSection(
 		difficulty,
-		chosenSongHasChorus,
-		chosenSongVerses
+		hasChorus,
+		verses
 	);
 	return (
 		<Link href="/game">

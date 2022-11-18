@@ -8,6 +8,9 @@ const chooseLastLineIndex = (lyrics: Array<string>, difficulty: string) => {
             return Math.floor(Math.random() * (7 - 3) + 3);
         case 'hard':
             // randomize and return at most index 11
+            if (lyrics.length < 4) {
+                return lyrics.length - 1;
+            }
             if (lyrics.length <= 8) {
                 return Math.floor(Math.random() * (lyrics.length - 3) + 3)
             } else if (lyrics.length >= 12) {
