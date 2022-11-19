@@ -8,12 +8,12 @@ import DifficultyButton from '../components/DifficultyButton';
 
 const SelectSongPage: NextPage = () => {
 	// @ts-ignore
-	const { currentSong, selectedASong } = useGlobalStates();
+	const { currentSong, selectASong } = useGlobalStates();
 
 	useEffect(() => {
 		getAllSongs().then(function (result) {
 			const randomSong = result[Math.floor(Math.random() * result.length)];
-			selectedASong(randomSong);
+			selectASong(randomSong);
 		});
 	}, []);
 

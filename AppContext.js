@@ -2,25 +2,43 @@ import React from 'react';
 import appReducer, { initialState } from './reducer/appReducer';
 import { createContext, useReducer, useContext } from 'react';
 
-const AppContext = React.createContext(initialState);
+const AppContext = createContext(initialState);
 
 export const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(appReducer, initialState);
 
-	const selectedASong = (song) => {
+	const selectASong = (song) => {
 		dispatch({
-			type: 'SELECTED_A_SONG',
+			type: 'SELECT_A_SONG',
 			payload: {
 				currentSong: song,
 			},
 		});
 	};
 
-	const completedASong = (song) => {
+	const selectDifficulty = (difficulty) => {
+		dispatch({
+			type: 'SELECT_DIFFICULTY',
+			payload: {
+				difficulty: difficulty,
+			},
+		});
+	};
+
+	const selectSection = (section) => {
+		dispatch({
+			type: 'SELECT_SECTION',
+			payload: {
+				selectSection: section,
+			},
+		});
+	};
+
+	const completeASong = (song) => {
 		const updatedPlayedSongs = state.prevPlayedSongs.concat(song);
 
 		dispatch({
-			type: 'COMPLETED_A_SONG',
+			type: 'COMPLETE_A_SONG',
 			payload: {
 				prevPlayedSongs: updatedPlayedSongs,
 			},
@@ -42,8 +60,10 @@ export const AppProvider = ({ children }) => {
 		currentSong: state.currentSong,
 		prevPlayedSongs: state.prevPlayedSongs,
 		score: state.score,
-		selectedASong,
-		completedASong,
+		selectASong,
+		selectDifficulty,
+		selectSection,
+		completeASong,
 		addToScore,
 	};
 
