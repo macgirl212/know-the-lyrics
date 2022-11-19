@@ -10,7 +10,7 @@ import styles from '../styles/Game.module.scss';
 import Title from '../components/Title';
 
 const Game: NextPage = () => {
-	const { currentSong } = useGlobalStates();
+	const { currentSong, score } = useGlobalStates();
 	const difficulty = sessionStorage.getItem('difficulty');
 	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
@@ -19,6 +19,7 @@ const Game: NextPage = () => {
 	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [section, setSection] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
+	const [startOfSection, setStartOfSection] = useState<number>(0);
 
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -47,6 +48,7 @@ const Game: NextPage = () => {
 				audioRef.current.currentTime = 0;
 			} else {
 				// if another verse is selected, start the audio five seconds before the first lyric
+				setStartOfSection(currentSong.verseTimestamps[selectedSection][0] - 5);
 				audioRef.current.currentTime =
 					currentSong.verseTimestamps[selectedSection][0] - 5;
 			}
@@ -55,6 +57,7 @@ const Game: NextPage = () => {
 			setLyrics(currentSong.chorus);
 			replaceLyricWithBlanks(currentSong.chorus, difficulty);
 			setTimestamps(currentSong.chorusTimestamps);
+			setStartOfSection(currentSong.chorusTimestamps[0] - 5);
 			audioRef.current.currentTime = currentSong.chorusTimestamps[0] - 5;
 		}
 		setSubtitle();
@@ -117,6 +120,16 @@ const Game: NextPage = () => {
 		}
 	};
 
+	const restartSong = () => {
+		audioRef.current.currentTime = startOfSection;
+		audioRef.current.play();
+		setCurrentLyrics('');
+		setIsAnswerToFill(false);
+		setLyricIndex(0);
+		setIsEndOfSong(false);
+		setIsPlaying(true);
+	};
+
 	const revealAnswer = () => {
 		if (isAnswerToFill == false) {
 			// render input to fill user's answer
@@ -143,7 +156,7 @@ const Game: NextPage = () => {
 		<>
 			<Title title={currentSong.title} />
 			<main className={styles.mainContainer}>
-				<h2>{section}</h2>
+				<h2 className={styles.subtitle}>{section}</h2>
 				<audio
 					src={currentSong.url}
 					onPlay={() => {
@@ -152,33 +165,51 @@ const Game: NextPage = () => {
 					onTimeUpdate={(e) => timeUpdate(e)}
 					ref={audioRef}
 				/>
-				{isAnswerToFill ? (
-					<div className={styles.inputDiv}>
-						<h2 className={styles.confirmedLyrics}>
-							{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
-						</h2>
-						<input
-							type="text"
-							className={styles.missingLyrics}
-							onChange={handleChange}
-							value={userInput}
-						/>
-					</div>
-				) : (
-					<>
-						{typeOfLyrics === 'final answer' ? (
-							<h2
-								className={styles.currentLyrics}
-								dangerouslySetInnerHTML={{ __html: currentLyrics }}
-							/>
-						) : (
-							<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
-								{currentLyrics}
+				{/* screen for lyrics */}
+				<div className={styles.gameContainer}>
+					{isAnswerToFill ? (
+						<div className={styles.inputDiv}>
+							<h2 className={styles.confirmedLyrics}>
+								{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
 							</h2>
-						)}
-					</>
+							<input
+								type="text"
+								className={styles.missingLyrics}
+								onChange={handleChange}
+								value={userInput}
+							/>
+						</div>
+					) : (
+						<>
+							{typeOfLyrics === 'final answer' ? (
+								<h2
+									className={styles.currentLyrics}
+									dangerouslySetInnerHTML={{ __html: currentLyrics }}
+								/>
+							) : (
+								<h2
+									className={`${styles.currentLyrics} ${styles.neutralLyrics}`}
+								>
+									{currentLyrics}
+								</h2>
+							)}
+						</>
+					)}
+				</div>
+				{/* various game settings buttons */}
+				{typeOfLyrics === 'final answer' ? null : (
+					<div className={styles.restartButton}>
+						<button onClick={restartSong}>Restart</button>
+					</div>
 				)}
+				<div className={styles.gameScore}>
+					<h3>Score:</h3>
+					<p className={styles.scoreNumber}>{score}</p>
+				</div>
 				<div className={styles.gameButtonsDiv}>
+					<Link href="/select">
+						<a className={styles.gameButtons}>Next Song</a>
+					</Link>
 					{typeOfLyrics === 'final answer' ? null : (
 						<>
 							{isEndOfSong ? (
@@ -192,9 +223,6 @@ const Game: NextPage = () => {
 							)}
 						</>
 					)}
-					<Link href="/select">
-						<a className={styles.gameButtons}>Next Song</a>
-					</Link>
 					<Link href="/scores">
 						<a className={styles.gameButtons}>Abandon Game</a>
 					</Link>
