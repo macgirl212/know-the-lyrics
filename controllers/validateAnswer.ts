@@ -10,13 +10,13 @@ const validateAnswer = (answer: string, currentLyrics: string, splitIndex: numbe
 
     let answerArray = [];
     for (let i = 0; i < formattedAnswer.length; i++) {
-        if (formattedAnswer[i] === userFormattedAnswer.split(' ')[i]) {
+        if (formattedAnswer[i].toLowerCase() === userFormattedAnswer.split(' ')[i].toLowerCase()) {
             answerArray.push(
-                `<span style="color:green;">${formattedAnswer[i]} </span>`
+                `<span style="color:green;">${answer.split(' ')[i]} </span>`
             );
         } else {
             answerArray.push(
-                `<span style="color:red;">${formattedAnswer[i]} </span>`
+                `<span style="color:red;">${answer.split(' ')[i]} </span>`
             );
         }
     }
