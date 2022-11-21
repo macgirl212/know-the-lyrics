@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import useGlobalStates from '../AppContext';
+import adjustScore from '../controllers/adjustScore';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
@@ -10,7 +11,8 @@ import styles from '../styles/Game.module.scss';
 import Title from '../components/Title';
 
 const Game: NextPage = () => {
-	const { currentSong, score } = useGlobalStates();
+	// @ts-ignore
+	const { currentSong, score, addToScore } = useGlobalStates();
 	const difficulty = sessionStorage.getItem('difficulty');
 	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
@@ -27,6 +29,7 @@ const Game: NextPage = () => {
 	const [isEndOfSong, setIsEndOfSong] = useState<boolean>(false);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
+	const [possibleScore, setPossibleScore] = useState<number>(0);
 	const [splitIndex, setSplitIndex] = useState<number>(
 		difficulty === 'easy' ? -3 : 1
 	);
@@ -85,6 +88,8 @@ const Game: NextPage = () => {
 		const lastLineIndex = chooseLastLineIndex(lyrics, difficulty);
 		const correctAnswer = lyrics[lastLineIndex];
 		setAnswer(correctAnswer);
+
+		setPossibleScore(correctAnswer.split(' ').slice(splitIndex).length * 100);
 
 		// convert some words in selected line to blanks
 		const blankLyrics = convertWordsToBlanks(correctAnswer, splitIndex);
@@ -145,6 +150,10 @@ const Game: NextPage = () => {
 			setTypeOfLyrics('final answer');
 			setCurrentLyrics(finalAnswer);
 			setIsAnswerToFill(false);
+
+			// adjust score
+			const scoreToAdd = adjustScore(finalAnswer, possibleScore);
+			addToScore(scoreToAdd);
 		}
 	};
 
@@ -205,6 +214,9 @@ const Game: NextPage = () => {
 				<div className={styles.gameScore}>
 					<h3>Score:</h3>
 					<p className={styles.scoreNumber}>{score}</p>
+					{typeOfLyrics === 'final answer' ? null : (
+						<p className={styles.possibleScore}>+ {possibleScore}</p>
+					)}
 				</div>
 				<div className={styles.gameButtonsDiv}>
 					<Link href="/select">

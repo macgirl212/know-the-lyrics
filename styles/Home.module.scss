@@ -12,6 +12,17 @@ $base-color: #A663CC;
   text-align: center;
 }
 
+.scoreLabel {
+  margin-top: 3em;
+  font-size: 4em;
+  text-align: center;
+}
+
+.score {
+  font-size: 5em;
+  transform: translateY(-1em);
+}
+
 .mainContainer {
   display: flex;
   flex-direction: column;

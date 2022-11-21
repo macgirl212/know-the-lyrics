@@ -2,9 +2,18 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect } from 'react';
 import styles from '../styles/Home.module.scss';
+import useGlobalStates from '../AppContext';
 
 const Home: NextPage = () => {
+	// @ts-ignore
+	const { resetGame } = useGlobalStates();
+
+	useEffect(() => {
+		resetGame();
+	}, []);
+
 	return (
 		<>
 			<header>

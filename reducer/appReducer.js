@@ -48,6 +48,16 @@ const appReducer = (state, action) => {
 				score: payload.score,
 			};
 		}
+
+		case 'RESET_GAME': {
+			return {
+				...state,
+				currentSong: payload.currentSong,
+				prevPlayedSongs: payload.prevPlayedSongs,
+				score: payload.score,
+			};
+		}
+
 		default:
 			throw new Error(`No case for type ${type} found in appReducer.`);
 	}

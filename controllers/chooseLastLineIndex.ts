@@ -20,7 +20,7 @@ const chooseLastLineIndex = (lyrics: Array<string>, difficulty: string) => {
         default:
             // if this was called, something went very wrong
             console.log("well... idk");
-            return lyrics.length - 3;
+            return lyrics.length - 1;
     };
 };
 

@@ -56,6 +56,25 @@ export const AppProvider = ({ children }) => {
 		});
 	};
 
+	const resetGame = () => {
+		dispatch({
+			type: 'RESET_GAME',
+			payload: {
+				currentSong: {
+					title: '',
+					url: '',
+					verses: [],
+					chorus: [],
+					verseTimestamps: [],
+					chorusTimestamps: [],
+					hasChorus: false,
+				},
+				prevPlayedSongs: [],
+				score: 0,
+			},
+		});
+	};
+
 	const value = {
 		currentSong: state.currentSong,
 		prevPlayedSongs: state.prevPlayedSongs,
@@ -65,6 +84,7 @@ export const AppProvider = ({ children }) => {
 		selectSection,
 		completeASong,
 		addToScore,
+		resetGame,
 	};
 
 	return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
