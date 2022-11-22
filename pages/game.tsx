@@ -12,16 +12,17 @@ import Title from '../components/Title';
 
 const Game: NextPage = () => {
 	// @ts-ignore
-	const { currentSong, score, addToScore } = useGlobalStates();
+	const { currentSong, prevPlayedSongs, score, completeASong, addToScore } =
+		useGlobalStates();
 	const difficulty = sessionStorage.getItem('difficulty');
 	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
 	// song info states
 	const [answer, setAnswer] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
-	const [section, setSection] = useState<string>('');
 	const [timestamps, setTimestamps] = useState<string[]>([]);
 	const [startOfSection, setStartOfSection] = useState<number>(0);
+	const [section, setSection] = useState<string>('');
 
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -65,6 +66,12 @@ const Game: NextPage = () => {
 		}
 		setSubtitle();
 	}, []);
+
+	useEffect(() => {
+		if (typeOfLyrics === 'final answer') {
+			completeASong(currentSong.title);
+		}
+	}, [typeOfLyrics]);
 
 	const setSubtitle = () => {
 		switch (selectedSection) {
@@ -219,9 +226,15 @@ const Game: NextPage = () => {
 					)}
 				</div>
 				<div className={styles.gameButtonsDiv}>
-					<Link href="/select">
-						<a className={styles.gameButtons}>Next Song</a>
-					</Link>
+					{prevPlayedSongs.length >= 5 ? (
+						<Link href="/scores">
+							<a className={styles.gameButtons}>End Game</a>
+						</Link>
+					) : (
+						<Link href="/select">
+							<a className={styles.gameButtons}>Next Song</a>
+						</Link>
+					)}
 					{typeOfLyrics === 'final answer' ? null : (
 						<>
 							{isEndOfSong ? (
@@ -235,9 +248,11 @@ const Game: NextPage = () => {
 							)}
 						</>
 					)}
-					<Link href="/scores">
-						<a className={styles.gameButtons}>Abandon Game</a>
-					</Link>
+					{prevPlayedSongs.length >= 5 ? null : (
+						<Link href="/scores">
+							<a className={styles.gameButtons}>Abandon Game</a>
+						</Link>
+					)}
 				</div>
 			</main>
 		</>

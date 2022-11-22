@@ -8,14 +8,25 @@ import DifficultyButton from '../components/DifficultyButton';
 
 const SelectSongPage: NextPage = () => {
 	// @ts-ignore
-	const { currentSong, selectASong } = useGlobalStates();
+	const { currentSong, prevPlayedSongs, selectASong } = useGlobalStates();
 
 	useEffect(() => {
-		getAllSongs().then(function (result) {
-			const randomSong = result[Math.floor(Math.random() * result.length)];
-			selectASong(randomSong);
+		getAllSongs().then((result) => {
+			chooseRandomSong(result);
 		});
 	}, []);
+
+	const chooseRandomSong = (result: any) => {
+		const randomSong = result[Math.floor(Math.random() * result.length)];
+		// if this song was not played before, select it
+		// @ts-ignore
+		if (!prevPlayedSongs.includes(randomSong.title)) {
+			selectASong(randomSong);
+			return;
+		} else {
+			chooseRandomSong(result);
+		}
+	};
 
 	return (
 		<>
