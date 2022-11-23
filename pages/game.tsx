@@ -183,6 +183,7 @@ const Game: NextPage = () => {
 				/>
 				{/* screen for lyrics */}
 				<div className={styles.gameContainer}>
+					{/* possible area for previous line of lyrics */}
 					{isAnswerToFill ? (
 						<div className={styles.inputDiv}>
 							<h2 className={styles.confirmedLyrics}>

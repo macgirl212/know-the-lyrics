@@ -1,9 +1,9 @@
 /* VARIABLES */
-// $accent-color-1: #6F2DBD;
-// $accent-color-2: #F6F740;
+$accent-color-1: #6F2DBD;
+$accent-color-2: #F6F740;
 $base-color: #A663CC;
-// $background-color: #C1BFC0;
-// $text-color-1: #191102;
+$background-color: #C1BFC0;
+$text-color-1: #191102;
 
 .title {
   margin-top: 3em;
@@ -33,7 +33,47 @@ $base-color: #A663CC;
     font-size: 2.5em;
     padding: 0.5em 1em;
     border-radius: 10px;
-    color: white;
-    background-color: grey;
+    color: #fff;
+    background-color: $accent-color-1;
+    border: 3px solid $text-color-1;
+    box-shadow: 0px 0px 10px 1px $text-color-1 inset;
+    transition: 300ms;
+    animation: buttonDim 300ms;
+    animation-fill-mode: forwards;
+
+    &:hover,
+    &:focus {
+      animation: buttonGlow 800ms;
+      animation-fill-mode: forwards;
+    }
   }
+}
+
+@keyframes buttonGlow {
+  0% {box-shadow: 0px 0px 15px 2px $text-color-1 inset;}
+  70% {
+    background-color: $accent-color-2;
+    box-shadow: 0px 0px 35px 6px $accent-color-1 inset;
+    color: $text-color-1}
+  100% {
+    background-color: $accent-color-2;
+    box-shadow: 0px 0px 5px 0px $text-color-1 inset, 0px 0px 35px 5px $accent-color-2;
+    transform: translateY(-0.15em);
+    border-width: 1px;
+    color: $text-color-1
+  } 
+}
+
+@keyframes buttonDim {
+  0% {
+    transform: translateY(-0.15em);
+  } 
+}
+
+.difficultyButtonsDiv {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
 }

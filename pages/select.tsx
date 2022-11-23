@@ -5,6 +5,7 @@ import useGlobalStates from '../AppContext';
 import getAllSongs from '../controllers/getSongs';
 import Title from '../components/Title';
 import DifficultyButton from '../components/DifficultyButton';
+import styles from '../styles/Home.module.scss';
 
 const SelectSongPage: NextPage = () => {
 	// @ts-ignore
@@ -31,20 +32,19 @@ const SelectSongPage: NextPage = () => {
 	return (
 		<>
 			<Title title={currentSong.title} />
-			<main>
-				<DifficultyButton
-					difficulty="Easy"
-					hasChorus={currentSong.hasChorus}
-					verses={currentSong.verses.length}
-				/>
-				<br />
-				<DifficultyButton
-					difficulty="Hard"
-					hasChorus={currentSong.hasChorus}
-					verses={currentSong.verses.length}
-				/>
-				<br />
-				<br />
+			<main className={styles.mainContainer}>
+				<div className={styles.difficultyButtonsDiv}>
+					<DifficultyButton
+						difficulty="Easy"
+						hasChorus={currentSong.hasChorus}
+						verses={currentSong.verses.length}
+					/>
+					<DifficultyButton
+						difficulty="Hard"
+						hasChorus={currentSong.hasChorus}
+						verses={currentSong.verses.length}
+					/>
+				</div>
 				<Link href="/scores">
 					<a>Abandon Game</a>
 				</Link>

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import chooseRandomSongSection from '../controllers/chooseRandomSongSection';
+import styles from '../styles/Home.module.scss';
 
 interface DifficultyButtonProps {
 	difficulty: string;
@@ -20,6 +21,7 @@ const DifficultyButton = ({
 	return (
 		<Link href="/game">
 			<a
+				className={styles.mainButton}
 				onClick={() => {
 					sessionStorage.setItem('difficulty', difficulty.toLowerCase());
 					sessionStorage.setItem(
