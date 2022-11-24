@@ -1,17 +1,25 @@
 // VARIABLES
 $accent-color-1: #6F2DBD;
 // $accent-color-2: #F6F740;
-// $base-color: #A663CC;
+$accent-color-3: #A663CC;
+// $base-color: #5d5660;
 // $background-color: #C1BFC0;
-// $text-color-1: #191102;
+$text-color-1: #191102;
 
 .container {
-    padding: 0.3em 0;
+    height: 5em;
     width: 100%;
-    background-color: $accent-color-1;
+    background-color: $text-color-1;
+    position: absolute;
+    top: 0;
     
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
+      text-shadow: 0px 0px 12px $accent-color-1;
+      transform: translateY(-0.25em);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 5px;
       text-align: center;
+      color: $accent-color-3;
     }
 }

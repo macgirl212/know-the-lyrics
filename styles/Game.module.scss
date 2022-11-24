@@ -1,7 +1,8 @@
 /* VARIABLES */
 // $accent-color-1: #6F2DBD;
 // $accent-color-2: #F6F740;
-$base-color: #A663CC;
+// $accent-color-3: #A663CC;
+$base-color: #5d5660;
 $background-color: #C1BFC0;
 $text-color-1: #191102;
 
@@ -31,12 +32,15 @@ $text-color-1: #191102;
         background-color: $background-color;
         color: $text-color-1;
         aspect-ratio: 16/9;
-        height: 70vh;
+        width: 70vw;
         margin: 0 auto;
+        border: 1px solid $text-color-1;
         border-radius: 5px;
+        box-shadow: 0px 0px 200px 5px $text-color-1 inset;
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
     }
 
     .inputDiv {
@@ -60,14 +64,18 @@ $text-color-1: #191102;
 
     .restartButton {
         position: absolute;
-        left: 5vw;
+        left: 0;
         top: 25vh;
+        width: 15vw;
+        display: flex;
+        justify-content: center;
     }
 
     .gameScore {
         position: absolute;
-        right: 2vw;
+        right: 0;
         top: 25vh;
+        width: 15vw;
         transform: translateY(-3em);
         z-index: 10;
         display: flex;
