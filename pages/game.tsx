@@ -194,6 +194,10 @@ const Game: NextPage = () => {
 								className={styles.missingLyrics}
 								onChange={handleChange}
 								value={userInput}
+								placeholder={currentLyrics
+									.split(' ')
+									.slice(splitIndex)
+									.join(' ')}
 							/>
 						</div>
 					) : (
