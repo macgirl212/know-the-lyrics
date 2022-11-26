@@ -22,6 +22,14 @@ const SongSchema = new mongoose.Schema({
 		type: [String],
 		required: false,
 	},
+	bridge: {
+		type: [String],
+		required: false,
+	},
+	ending: {
+		type: [String],
+		required: false,
+	},
 	verseTimestamps: {
 		type: [Array],
 		required: true,
@@ -30,7 +38,23 @@ const SongSchema = new mongoose.Schema({
 		type: [Number],
 		required: false,
 	},
+	bridgeTimestamps: {
+		type: [Number],
+		required: false,
+	},
+	endingTimestamps: {
+		type: [Number],
+		required: false,
+	},
 	hasChorus: {
+		type: Boolean,
+		required: true,
+	},
+	hasBridge: {
+		type: Boolean,
+		required: true,
+	},
+	hasEnding: {
 		type: Boolean,
 		required: true,
 	},

@@ -7,6 +7,22 @@ import Title from '../components/Title';
 import DifficultyButton from '../components/DifficultyButton';
 import styles from '../styles/Home.module.scss';
 
+interface Song {
+	title: string;
+	url: string;
+	verses: string[][];
+	chorus?: string[];
+	bridge?: string[];
+	ending?: string[];
+	verseTimestamps: number[][];
+	chorusTimestamps?: number[];
+	bridgeTimetamps?: number[];
+	endingTimestamps?: number[];
+	hasChorus: boolean;
+	hasBridge: boolean;
+	hasEnding: boolean;
+}
+
 const SelectSongPage: NextPage = () => {
 	// @ts-ignore
 	const { currentSong, prevPlayedSongs, selectASong } = useGlobalStates();
@@ -17,10 +33,9 @@ const SelectSongPage: NextPage = () => {
 		});
 	}, []);
 
-	const chooseRandomSong = (result: any) => {
-		const randomSong = result[Math.floor(Math.random() * result.length)];
+	const chooseRandomSong = (result: Song[]) => {
+		const randomSong: Song = result[Math.floor(Math.random() * result.length)];
 		// if this song was not played before, select it
-		// @ts-ignore
 		if (!prevPlayedSongs.includes(randomSong.title)) {
 			selectASong(randomSong);
 			return;
