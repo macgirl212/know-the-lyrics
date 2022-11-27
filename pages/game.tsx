@@ -8,6 +8,8 @@ import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
 import styles from '../styles/Game.module.scss';
 
+import GameScreen from '../components/GameScreen';
+import RestartButton from '../components/RestartButton';
 import Title from '../components/Title';
 
 const Game: NextPage = () => {
@@ -164,10 +166,6 @@ const Game: NextPage = () => {
 		}
 	};
 
-	const handleChange = (event: any) => {
-		setUserInput(event.target.value);
-	};
-
 	return (
 		<>
 			<Title title={currentSong.title} />
@@ -182,47 +180,16 @@ const Game: NextPage = () => {
 					ref={audioRef}
 				/>
 				{/* screen for lyrics */}
-				<div className={styles.gameContainer}>
-					{/* possible area for previous line of lyrics */}
-					{isAnswerToFill ? (
-						<div className={styles.inputDiv}>
-							<h2 className={styles.confirmedLyrics}>
-								{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
-							</h2>
-							<input
-								type="text"
-								className={styles.missingLyrics}
-								onChange={handleChange}
-								value={userInput}
-								placeholder={currentLyrics
-									.split(' ')
-									.slice(splitIndex)
-									.join(' ')}
-							/>
-						</div>
-					) : (
-						<>
-							{typeOfLyrics === 'final answer' ? (
-								<h2
-									className={styles.currentLyrics}
-									dangerouslySetInnerHTML={{ __html: currentLyrics }}
-								/>
-							) : (
-								<h2
-									className={`${styles.currentLyrics} ${styles.neutralLyrics}`}
-								>
-									{currentLyrics}
-								</h2>
-							)}
-						</>
-					)}
-				</div>
+				<GameScreen
+					currentLyrics={currentLyrics}
+					isAnswerToFill={isAnswerToFill}
+					splitIndex={splitIndex}
+					setUserInput={setUserInput}
+					typeOfLyrics={typeOfLyrics}
+					userInput={userInput}
+				/>
 				{/* various game settings buttons */}
-				{typeOfLyrics === 'final answer' ? null : (
-					<div className={styles.restartButton}>
-						<button onClick={restartSong}>Restart</button>
-					</div>
-				)}
+				<RestartButton restartSong={restartSong} typeOfLyrics={typeOfLyrics} />
 				<div className={styles.gameScore}>
 					<h3>Score:</h3>
 					<p className={styles.scoreNumber}>{score}</p>
