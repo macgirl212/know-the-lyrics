@@ -149,12 +149,15 @@ const Game: NextPage = () => {
 			// render input to fill user's answer
 			setIsAnswerToFill(true);
 		} else {
-			const finalAnswer = validateAnswer(
-				answer,
-				currentLyrics,
-				splitIndex,
-				userInput
-			);
+			const finalAnswer = validateAnswer(answer, splitIndex, userInput);
+
+			// if an error appears, show error message
+			if (finalAnswer.startsWith('Error: ')) {
+				console.log(finalAnswer);
+				setIsAnswerToFill(false);
+				setCurrentLyrics(lyrics[lyricIndex - 1]);
+				return;
+			}
 
 			setTypeOfLyrics('final answer');
 			setCurrentLyrics(finalAnswer);
@@ -192,7 +195,11 @@ const Game: NextPage = () => {
 				<RestartButton restartSong={restartSong} typeOfLyrics={typeOfLyrics} />
 				<div className={styles.gameScore}>
 					<h3>Score:</h3>
-					<p className={styles.scoreNumber}>{score}</p>
+					{typeOfLyrics === 'final answer' ? (
+						<p className={styles.adjustedScoreNumber}>{score}</p>
+					) : (
+						<p className={styles.scoreNumber}>{score}</p>
+					)}
 					{typeOfLyrics === 'final answer' ? null : (
 						<p className={styles.possibleScore}>+ {possibleScore}</p>
 					)}
