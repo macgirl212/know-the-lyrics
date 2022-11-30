@@ -9,6 +9,7 @@ import validateAnswer from '../controllers/validateAnswer';
 import styles from '../styles/Game.module.scss';
 
 import GameScreen from '../components/GameScreen';
+import GameScore from '../components/GameScore';
 import RestartButton from '../components/RestartButton';
 import Title from '../components/Title';
 
@@ -98,7 +99,12 @@ const Game: NextPage = () => {
 		const correctAnswer = lyrics[lastLineIndex];
 		setAnswer(correctAnswer);
 
-		setPossibleScore(correctAnswer.split(' ').slice(splitIndex).length * 100);
+		let baseScore = correctAnswer.split(' ').slice(splitIndex).length * 100;
+		if (difficulty === 'hard') {
+			setPossibleScore(baseScore * 3);
+		} else {
+			setPossibleScore(baseScore);
+		}
 
 		// convert some words in selected line to blanks
 		const blankLyrics = convertWordsToBlanks(correctAnswer, splitIndex);
@@ -164,7 +170,7 @@ const Game: NextPage = () => {
 			setIsAnswerToFill(false);
 
 			// adjust score
-			const scoreToAdd = adjustScore(finalAnswer, possibleScore);
+			const scoreToAdd = adjustScore(difficulty, finalAnswer, possibleScore);
 			addToScore(scoreToAdd);
 		}
 	};
@@ -191,19 +197,9 @@ const Game: NextPage = () => {
 					typeOfLyrics={typeOfLyrics}
 					userInput={userInput}
 				/>
-				{/* various game settings buttons */}
+				{/* various game settings */}
 				<RestartButton restartSong={restartSong} typeOfLyrics={typeOfLyrics} />
-				<div className={styles.gameScore}>
-					<h3>Score:</h3>
-					{typeOfLyrics === 'final answer' ? (
-						<p className={styles.adjustedScoreNumber}>{score}</p>
-					) : (
-						<p className={styles.scoreNumber}>{score}</p>
-					)}
-					{typeOfLyrics === 'final answer' ? null : (
-						<p className={styles.possibleScore}>+ {possibleScore}</p>
-					)}
-				</div>
+				<GameScore possibleScore={possibleScore} typeOfLyrics={typeOfLyrics} />
 				<div className={styles.gameButtonsDiv}>
 					{prevPlayedSongs.length >= 5 ? (
 						<Link href="/scores">
