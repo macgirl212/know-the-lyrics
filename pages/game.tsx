@@ -8,8 +8,9 @@ import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
 import styles from '../styles/Game.module.scss';
 
-import GameScreen from '../components/GameScreen';
 import GameScore from '../components/GameScore';
+import GameScreen from '../components/GameScreen';
+import NextSongButton from '../components/NextSongButton';
 import RestartButton from '../components/RestartButton';
 import Title from '../components/Title';
 
@@ -201,15 +202,7 @@ const Game: NextPage = () => {
 				<RestartButton restartSong={restartSong} typeOfLyrics={typeOfLyrics} />
 				<GameScore possibleScore={possibleScore} typeOfLyrics={typeOfLyrics} />
 				<div className={styles.gameButtonsDiv}>
-					{prevPlayedSongs.length >= 5 ? (
-						<Link href="/scores">
-							<a className={styles.gameButtons}>End Game</a>
-						</Link>
-					) : (
-						<Link href="/select">
-							<a className={styles.gameButtons}>Next Song</a>
-						</Link>
-					)}
+					<NextSongButton />
 					{typeOfLyrics === 'final answer' ? null : (
 						<>
 							{isEndOfSong ? (
