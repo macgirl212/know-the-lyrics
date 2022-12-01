@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from '../styles/Game.module.scss';
 
 type RestartButtonProps = {
@@ -10,7 +11,15 @@ const RestartButton = ({ restartSong, typeOfLyrics }: RestartButtonProps) => {
 		<>
 			{typeOfLyrics === 'final answer' ? null : (
 				<div className={styles.restartButton}>
-					<button onClick={restartSong}>Restart</button>
+					<a onClick={restartSong}>
+						<Image
+							src="/refresh.svg"
+							height={50}
+							width={50}
+							className={styles.svgImage}
+							alt="Restart"
+						/>
+					</a>
 				</div>
 			)}
 		</>

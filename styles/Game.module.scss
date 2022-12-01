@@ -1,5 +1,5 @@
 /* VARIABLES */
-// $accent-color-1: #6F2DBD;
+$accent-color-1: #6F2DBD;
 // $accent-color-2: #F6F740;
 // $accent-color-3: #A663CC;
 $base-color: #5d5660;
@@ -74,6 +74,17 @@ $text-color-1: #191102;
         justify-content: space-around;
         bottom: 2em;
         width: 100vw;
+
+        a {
+            background-color: $accent-color-1;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
     }
 
     .restartButton {
@@ -83,6 +94,18 @@ $text-color-1: #191102;
         width: 15vw;
         display: flex;
         justify-content: center;
+        cursor: pointer;
+
+        a {
+            background-color: $accent-color-1;
+            padding: 10px;
+            border-radius: 50%;
+            border: 1px solid black;
+        }
+    }
+
+    .svgImage {
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
     }
 
     .gameScore {

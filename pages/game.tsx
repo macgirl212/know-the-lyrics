@@ -11,6 +11,7 @@ import styles from '../styles/Game.module.scss';
 import GameScore from '../components/GameScore';
 import GameScreen from '../components/GameScreen';
 import NextSongButton from '../components/NextSongButton';
+import PlayPauseButton from '../components/PlayPauseButton';
 import RestartButton from '../components/RestartButton';
 import Title from '../components/Title';
 
@@ -115,15 +116,6 @@ const Game: NextPage = () => {
 		lyrics.push(blankLyrics);
 	};
 
-	const togglePlay = () => {
-		if (isPlaying) {
-			audioRef.current.pause();
-		} else {
-			audioRef.current.play();
-		}
-		setIsPlaying(!isPlaying);
-	};
-
 	const timeUpdate = (e: any) => {
 		const currentTime = e.target.currentTime;
 
@@ -210,9 +202,11 @@ const Game: NextPage = () => {
 									Submit Answer
 								</button>
 							) : (
-								<button className={styles.gameButtons} onClick={togglePlay}>
-									{isPlaying ? 'Pause' : 'Play'}
-								</button>
+								<PlayPauseButton
+									audioRef={audioRef}
+									isPlaying={isPlaying}
+									setIsPlaying={setIsPlaying}
+								/>
 							)}
 						</>
 					)}
