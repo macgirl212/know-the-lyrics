@@ -1,7 +1,7 @@
 /* VARIABLES */
 $accent-color-1: #6F2DBD;
 // $accent-color-2: #F6F740;
-// $accent-color-3: #A663CC;
+$accent-color-3: #A663CC;
 $base-color: #5d5660;
 $background-color: #C1BFC0;
 $text-color-1: #191102;
@@ -77,6 +77,7 @@ $text-color-1: #191102;
 
         a {
             background-color: $accent-color-1;
+            box-shadow: 0px 0px 7px 0px $text-color-1 inset;
             padding: 10px;
             border: 1px solid black;
             border-radius: 50%;
@@ -84,6 +85,17 @@ $text-color-1: #191102;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
+
+            &:hover,
+            &:focus {
+                background-color: $accent-color-3;
+                box-shadow: 0px 0px 10px 5px $accent-color-3, 0px 0px 20px 15px $accent-color-1 inset;
+            }
+
+            &:active {
+                background-color: $text-color-1;
+                box-shadow: 0px 0px 10px 5px $accent-color-3, 0px 0px 50px 15px $accent-color-1 inset;
+            }
         }
     }
 
@@ -98,9 +110,21 @@ $text-color-1: #191102;
 
         a {
             background-color: $accent-color-1;
+            box-shadow: 0px 0px 7px 0px $text-color-1 inset;
             padding: 10px;
             border-radius: 50%;
             border: 1px solid black;
+
+            &:hover,
+            &:focus {
+                background-color: $accent-color-3;
+                box-shadow: 0px 0px 10px 5px $accent-color-3, 0px 0px 20px 15px $accent-color-1 inset;
+            }
+
+            &:active {
+                background-color: $text-color-1;
+                box-shadow: 0px 0px 10px 5px $accent-color-3, 0px 0px 50px 15px $accent-color-1 inset;
+            }
         }
     }
 
