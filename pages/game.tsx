@@ -152,7 +152,6 @@ const Game: NextPage = () => {
 
 			// if an error appears, show error message
 			if (finalAnswer.startsWith('Error: ')) {
-				console.log(finalAnswer);
 				setIsAnswerToFill(false);
 				setCurrentLyrics(lyrics[lyricIndex - 1]);
 				return;
@@ -185,6 +184,7 @@ const Game: NextPage = () => {
 				<GameScreen
 					currentLyrics={currentLyrics}
 					isAnswerToFill={isAnswerToFill}
+					revealAnswer={revealAnswer}
 					splitIndex={splitIndex}
 					setUserInput={setUserInput}
 					typeOfLyrics={typeOfLyrics}

@@ -21,6 +21,12 @@ const PlayPauseButton = ({
 		setIsPlaying(!isPlaying);
 	};
 
+	const handleKeyDown = (event: any) => {
+		if (event.keyCode === 80) {
+			togglePlay();
+		}
+	};
+
 	return (
 		<a className={styles.gameButtons} onClick={togglePlay}>
 			{isPlaying ? (
@@ -29,6 +35,7 @@ const PlayPauseButton = ({
 					height={50}
 					width={50}
 					className={styles.svgImage}
+					onKeyDown={handleKeyDown}
 					alt="Pause"
 				/>
 			) : (
@@ -37,6 +44,7 @@ const PlayPauseButton = ({
 					height={50}
 					width={50}
 					className={styles.svgImage}
+					onKeyDown={handleKeyDown}
 					alt="Play"
 				/>
 			)}

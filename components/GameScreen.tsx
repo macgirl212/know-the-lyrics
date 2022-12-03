@@ -6,6 +6,7 @@ import ConfirmedLyricsBanner from './ConfirmedLyricsBanner';
 type GameScreenProps = {
 	currentLyrics: string;
 	isAnswerToFill: boolean;
+	revealAnswer: any;
 	splitIndex: number;
 	setUserInput: any;
 	typeOfLyrics: string;
@@ -15,6 +16,7 @@ type GameScreenProps = {
 const GameScreen = ({
 	currentLyrics,
 	isAnswerToFill,
+	revealAnswer,
 	splitIndex,
 	setUserInput,
 	typeOfLyrics,
@@ -26,6 +28,7 @@ const GameScreen = ({
 			{isAnswerToFill ? (
 				<AnswerInput
 					currentLyrics={currentLyrics}
+					revealAnswer={revealAnswer}
 					splitIndex={splitIndex}
 					userInput={userInput}
 					setUserInput={setUserInput}
