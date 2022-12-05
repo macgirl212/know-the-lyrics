@@ -8,6 +8,7 @@ import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
 import styles from '../styles/Game.module.scss';
 
+import AbandonGameButton from '../components/AbandonGameButton';
 import GameScore from '../components/GameScore';
 import GameScreen from '../components/GameScreen';
 import NextSongButton from '../components/NextSongButton';
@@ -210,11 +211,7 @@ const Game: NextPage = () => {
 							)}
 						</>
 					)}
-					{prevPlayedSongs.length >= 5 ? null : (
-						<Link href="/scores">
-							<a className={styles.gameButtons}>Abandon Game</a>
-						</Link>
-					)}
+					<AbandonGameButton />
 				</div>
 			</main>
 		</>

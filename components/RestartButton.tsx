@@ -7,11 +7,6 @@ type RestartButtonProps = {
 };
 
 const RestartButton = ({ restartSong, typeOfLyrics }: RestartButtonProps) => {
-	const handleKeyDown = (event: any) => {
-		if (event.keyCode === 82) {
-			restartSong();
-		}
-	};
 	return (
 		<>
 			{typeOfLyrics === 'final answer' ? null : (
@@ -22,7 +17,6 @@ const RestartButton = ({ restartSong, typeOfLyrics }: RestartButtonProps) => {
 							height={50}
 							width={50}
 							className={styles.svgImage}
-							onKeyDown={handleKeyDown}
 							alt="Restart"
 						/>
 					</a>
