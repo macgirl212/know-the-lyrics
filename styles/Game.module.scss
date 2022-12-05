@@ -85,6 +85,7 @@ $text-color-1: #191102;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
+            transition: 50ms;
 
             &:hover,
             &:focus {

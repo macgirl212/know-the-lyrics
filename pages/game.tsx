@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 import useGlobalStates from '../AppContext';
 import adjustScore from '../controllers/adjustScore';
@@ -18,8 +17,7 @@ import Title from '../components/Title';
 
 const Game: NextPage = () => {
 	// @ts-ignore
-	const { currentSong, prevPlayedSongs, score, completeASong, addToScore } =
-		useGlobalStates();
+	const { currentSong, completeASong, addToScore } = useGlobalStates();
 	const difficulty = sessionStorage.getItem('difficulty');
 	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
 
@@ -199,9 +197,9 @@ const Game: NextPage = () => {
 					{typeOfLyrics === 'final answer' ? null : (
 						<>
 							{isEndOfSong ? (
-								<button className={styles.gameButtons} onClick={revealAnswer}>
+								<a className={styles.gameButtons} onClick={revealAnswer}>
 									Submit Answer
-								</button>
+								</a>
 							) : (
 								<PlayPauseButton
 									audioRef={audioRef}
