@@ -115,6 +115,7 @@ $text-color-1: #191102;
             padding: 10px;
             border-radius: 50%;
             border: 1px solid black;
+            transition: 50ms;
 
             &:hover,
             &:focus {
