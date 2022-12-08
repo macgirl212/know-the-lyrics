@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styles from '../styles/Game.module.scss';
 
 import AnswerInput from './AnswerInput';
@@ -6,6 +7,9 @@ import ConfirmedLyricsBanner from './ConfirmedLyricsBanner';
 type GameScreenProps = {
 	currentLyrics: string;
 	isAnswerToFill: boolean;
+	isEndOfSong: boolean;
+	lyricIndex: number;
+	lyrics: Array<string>;
 	revealAnswer: any;
 	splitIndex: number;
 	setUserInput: any;
@@ -16,15 +20,28 @@ type GameScreenProps = {
 const GameScreen = ({
 	currentLyrics,
 	isAnswerToFill,
+	isEndOfSong,
+	lyricIndex,
+	lyrics,
 	revealAnswer,
 	splitIndex,
 	setUserInput,
 	typeOfLyrics,
 	userInput,
 }: GameScreenProps) => {
+	const [prevLyrics, setPrevLyrics] = useState<string>('');
+	useEffect(() => {
+		if (isEndOfSong) {
+			setTimeout(() => {
+				setPrevLyrics(lyrics[lyricIndex - 2]);
+			}, 5000);
+		} else {
+			setPrevLyrics('');
+		}
+	}),
+		[isEndOfSong];
 	return (
 		<div className={styles.gameContainer}>
-			{/* possible area for previous line of lyrics */}
 			{isAnswerToFill ? (
 				<AnswerInput
 					currentLyrics={currentLyrics}
@@ -34,10 +51,15 @@ const GameScreen = ({
 					setUserInput={setUserInput}
 				/>
 			) : (
-				<ConfirmedLyricsBanner
-					currentLyrics={currentLyrics}
-					typeOfLyrics={typeOfLyrics}
-				/>
+				<>
+					{isEndOfSong ? (
+						<p className={styles.prevLyrics}>{prevLyrics}</p>
+					) : null}
+					<ConfirmedLyricsBanner
+						currentLyrics={currentLyrics}
+						typeOfLyrics={typeOfLyrics}
+					/>
+				</>
 			)}
 		</div>
 	);

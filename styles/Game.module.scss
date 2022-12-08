@@ -29,6 +29,7 @@ $text-color-1: #191102;
     }
 
     .gameContainer {
+        position: relative;
         background-color: $background-color;
         color: $text-color-1;
         aspect-ratio: 16/9;
@@ -42,6 +43,25 @@ $text-color-1: #191102;
         align-items: center;
         justify-content: center;
         text-align: center;
+    }
+
+    .prevLyrics {
+        position: absolute;
+        top: 0;
+        font-size: 2em;
+        color: $text-color-1;
+        animation: fadeIn 5s;
+        animation-delay: 5s;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes fadeIn {
+        0% { 
+            opacity: 0;
+        }
+        100% { 
+            opacity: 1;
+        }
     }
 
     .inputDiv {
@@ -107,11 +127,11 @@ $text-color-1: #191102;
         width: 15vw;
         display: flex;
         justify-content: center;
-        cursor: pointer;
 
         a {
             background-color: $accent-color-1;
             box-shadow: 0px 0px 7px 0px $text-color-1 inset;
+            cursor: pointer;
             padding: 10px;
             border-radius: 50%;
             border: 1px solid black;

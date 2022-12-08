@@ -182,10 +182,13 @@ const Game: NextPage = () => {
 				{/* screen for lyrics */}
 				<GameScreen
 					currentLyrics={currentLyrics}
+					isEndOfSong={isEndOfSong}
 					isAnswerToFill={isAnswerToFill}
+					lyricIndex={lyricIndex}
+					lyrics={lyrics}
 					revealAnswer={revealAnswer}
-					splitIndex={splitIndex}
 					setUserInput={setUserInput}
+					splitIndex={splitIndex}
 					typeOfLyrics={typeOfLyrics}
 					userInput={userInput}
 				/>
