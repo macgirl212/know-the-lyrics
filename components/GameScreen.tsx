@@ -52,7 +52,7 @@ const GameScreen = ({
 				/>
 			) : (
 				<>
-					{isEndOfSong ? (
+					{isEndOfSong && typeOfLyrics !== 'final answer' ? (
 						<p className={styles.prevLyrics}>{prevLyrics}</p>
 					) : null}
 					<ConfirmedLyricsBanner
