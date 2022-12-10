@@ -182,8 +182,8 @@ const Game: NextPage = () => {
 				{/* screen for lyrics */}
 				<GameScreen
 					currentLyrics={currentLyrics}
-					isEndOfSong={isEndOfSong}
 					isAnswerToFill={isAnswerToFill}
+					isEndOfSong={isEndOfSong}
 					lyricIndex={lyricIndex}
 					lyrics={lyrics}
 					revealAnswer={revealAnswer}
