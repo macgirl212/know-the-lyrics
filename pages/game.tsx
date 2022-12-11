@@ -16,10 +16,15 @@ import RestartButton from '../components/RestartButton';
 import Title from '../components/Title';
 
 const Game: NextPage = () => {
-	// @ts-ignore
-	const { currentSong, completeASong, addToScore } = useGlobalStates();
-	const difficulty = sessionStorage.getItem('difficulty');
-	const selectedSection = Number(sessionStorage.getItem('selectedSection'));
+	const {
+		currentSong,
+		difficulty,
+		selectedSection,
+		// @ts-ignore
+		completeASong,
+		// @ts-ignore
+		addToScore,
+	} = useGlobalStates();
 
 	// song info states
 	const [answer, setAnswer] = useState<string>('');
@@ -41,7 +46,9 @@ const Game: NextPage = () => {
 	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
 	const [userInput, setUserInput] = useState<string>('');
 
-	const audioRef = useRef(new Audio());
+	const audioRef = useRef<HTMLAudioElement | undefined>(
+		typeof Audio !== 'undefined' ? new Audio() : undefined
+	);
 
 	useEffect(() => {
 		// initial setup for current song

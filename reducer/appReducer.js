@@ -33,7 +33,7 @@ const appReducer = (state, action) => {
 		case 'SELECT_SECTION': {
 			return {
 				...state,
-				selectSection: payload.selectedSection,
+				selectedSection: payload.selectedSection,
 			};
 		}
 		case 'COMPLETE_A_SONG': {

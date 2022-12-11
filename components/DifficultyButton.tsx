@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import useGlobalStates from '../AppContext';
 import chooseRandomSongSection from '../controllers/chooseRandomSongSection';
 import styles from '../styles/Home.module.scss';
 
@@ -18,16 +19,15 @@ const DifficultyButton = ({
 		hasChorus,
 		verses
 	);
+	// @ts-ignore
+	const { selectDifficulty, selectSection } = useGlobalStates();
 	return (
 		<Link href="/game">
 			<a
 				className={styles.mainButton}
 				onClick={() => {
-					sessionStorage.setItem('difficulty', difficulty.toLowerCase());
-					sessionStorage.setItem(
-						'selectedSection',
-						selectedSection!.toString()
-					);
+					selectDifficulty(difficulty.toLowerCase());
+					selectSection(selectedSection);
 				}}
 			>
 				{difficulty}

@@ -29,7 +29,7 @@ export const AppProvider = ({ children }) => {
 		dispatch({
 			type: 'SELECT_SECTION',
 			payload: {
-				selectSection: section,
+				selectedSection: section,
 			},
 		});
 	};
@@ -77,6 +77,8 @@ export const AppProvider = ({ children }) => {
 
 	const value = {
 		currentSong: state.currentSong,
+		difficulty: state.difficulty,
+		selectedSection: state.selectedSection,
 		prevPlayedSongs: state.prevPlayedSongs,
 		score: state.score,
 		selectASong,
