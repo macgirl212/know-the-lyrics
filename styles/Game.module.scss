@@ -45,6 +45,14 @@ $text-color-1: #191102;
         text-align: center;
     }
 
+    .errorMessage {
+        position: absolute;
+        top: 0;
+        font-size: 2.5em;
+        color: red;
+        font-weight: bold;
+    }
+
     .prevLyrics {
         position: absolute;
         top: 0;

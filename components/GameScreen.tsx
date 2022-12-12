@@ -6,6 +6,7 @@ import PrevLyricsBanner from './PrevLyricsBanner';
 
 type GameScreenProps = {
 	currentLyrics: string;
+	errorMessage: string;
 	isAnswerToFill: boolean;
 	isEndOfSong: boolean;
 	lyricIndex: number;
@@ -19,6 +20,7 @@ type GameScreenProps = {
 
 const GameScreen = ({
 	currentLyrics,
+	errorMessage,
 	isAnswerToFill,
 	isEndOfSong,
 	lyricIndex,
@@ -32,6 +34,7 @@ const GameScreen = ({
 	return (
 		<div className={styles.gameContainer}>
 			<PrevLyricsBanner
+				errorMessage={errorMessage}
 				isEndOfSong={isEndOfSong}
 				lyricIndex={lyricIndex}
 				lyrics={lyrics}

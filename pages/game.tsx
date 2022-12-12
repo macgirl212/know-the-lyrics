@@ -35,11 +35,13 @@ const Game: NextPage = () => {
 
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
+	const [errorMessage, setErrorMessage] = useState<string>('');
 	const [isAnswerToFill, setIsAnswerToFill] = useState<boolean>(false);
 	const [isEndOfSong, setIsEndOfSong] = useState<boolean>(false);
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [possibleScore, setPossibleScore] = useState<number>(0);
+	/* fix splitIndex to accomodate for lyrics less than 3 words long */
 	const [splitIndex, setSplitIndex] = useState<number>(
 		difficulty === 'easy' ? -3 : 1
 	);
@@ -143,6 +145,7 @@ const Game: NextPage = () => {
 		audioRef.current.currentTime = startOfSection;
 		audioRef.current.play();
 		setCurrentLyrics('');
+		setErrorMessage('');
 		setIsAnswerToFill(false);
 		setLyricIndex(0);
 		setIsEndOfSong(false);
@@ -158,6 +161,7 @@ const Game: NextPage = () => {
 
 			// if an error appears, show error message
 			if (finalAnswer.startsWith('Error: ')) {
+				setErrorMessage(finalAnswer.split('Error: ')[1]);
 				setIsAnswerToFill(false);
 				setCurrentLyrics(lyrics[lyricIndex - 1]);
 				return;
@@ -189,6 +193,7 @@ const Game: NextPage = () => {
 				{/* screen for lyrics */}
 				<GameScreen
 					currentLyrics={currentLyrics}
+					errorMessage={errorMessage}
 					isAnswerToFill={isAnswerToFill}
 					isEndOfSong={isEndOfSong}
 					lyricIndex={lyricIndex}

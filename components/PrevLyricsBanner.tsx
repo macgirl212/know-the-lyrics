@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/Game.module.scss';
 
 type PrevLyricsBannerProps = {
+	errorMessage: string;
 	isEndOfSong: boolean;
 	lyricIndex: number;
 	lyrics: Array<string>;
@@ -9,6 +10,7 @@ type PrevLyricsBannerProps = {
 };
 
 const PrevLyricsBanner = ({
+	errorMessage,
 	isEndOfSong,
 	lyricIndex,
 	lyrics,
@@ -28,9 +30,15 @@ const PrevLyricsBanner = ({
 
 	return (
 		<>
-			{isEndOfSong && typeOfLyrics !== 'final answer' ? (
-				<p className={styles.prevLyrics}>{prevLyrics}</p>
-			) : null}
+			{errorMessage === '' ? (
+				<>
+					{isEndOfSong && typeOfLyrics !== 'final answer' ? (
+						<p className={styles.prevLyrics}>{prevLyrics}</p>
+					) : null}
+				</>
+			) : (
+				<p className={styles.errorMessage}>{errorMessage}</p>
+			)}
 		</>
 	);
 };
