@@ -1,21 +1,21 @@
 const chooseRandomSongSection = (
 	difficulty: string,
-	chosenSongHasChorus: boolean,
-	chosenSongVerses: number
+	hasChorus: boolean,
+	verses: number
 ) => {
+	// a return of 0 and above chooses verse array by index in nested array
+	// a return of -1 chooses chorus
 	switch (difficulty) {
 		case 'Easy':
-			let selectedSection = 0;
-			if (chosenSongHasChorus) {
-				selectedSection = Math.floor(Math.random()) - 1;
+			if (hasChorus) {
+				return Math.floor(Math.random() * 2) - 1;
 			}
-			return selectedSection;
+			return 0;
 		case 'Hard': {
-			let selectedSection = Math.floor(Math.random() * chosenSongVerses);
-			if (chosenSongHasChorus) {
-				selectedSection -= 1;
+			if (hasChorus) {
+				return Math.floor(Math.random() * (verses + 1)) - 1;
 			}
-			return selectedSection;
+			return Math.floor(Math.random() * verses);
 		}
 	}
 };
