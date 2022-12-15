@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useEffect, useState, useRef } from 'react';
 import useGlobalStates from '../AppContext';
 import adjustScore from '../controllers/adjustScore';
+import adjustSplitIndex from '../controllers/adjustSplitIndex';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
@@ -41,10 +42,7 @@ const Game: NextPage = () => {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 	const [lyricIndex, setLyricIndex] = useState<number>(0);
 	const [possibleScore, setPossibleScore] = useState<number>(0);
-	/* fix splitIndex to accomodate for lyrics less than 3 words long */
-	const [splitIndex, setSplitIndex] = useState<number>(
-		difficulty === 'easy' ? -3 : 1
-	);
+	const [splitIndex, setSplitIndex] = useState<number>();
 	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
 	const [userInput, setUserInput] = useState<string>('');
 
@@ -109,7 +107,11 @@ const Game: NextPage = () => {
 		const correctAnswer = lyrics[lastLineIndex];
 		setAnswer(correctAnswer);
 
-		let baseScore = correctAnswer.split(' ').slice(splitIndex).length * 100;
+		const adjustedSplitIndex = adjustSplitIndex(correctAnswer, difficulty);
+		setSplitIndex(adjustedSplitIndex);
+
+		let baseScore =
+			correctAnswer.split(' ').slice(adjustedSplitIndex).length * 100;
 		if (difficulty === 'hard') {
 			setPossibleScore(baseScore * 3);
 		} else {
@@ -117,7 +119,7 @@ const Game: NextPage = () => {
 		}
 
 		// convert some words in selected line to blanks
-		const blankLyrics = convertWordsToBlanks(correctAnswer, splitIndex);
+		const blankLyrics = convertWordsToBlanks(correctAnswer, adjustedSplitIndex);
 
 		// splice lyrics array at chosen index and insert the chosen line
 		lyrics.splice(lastLineIndex);
