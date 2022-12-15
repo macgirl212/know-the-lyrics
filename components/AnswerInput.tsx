@@ -30,6 +30,7 @@ const AnswerInput = ({
 				{currentLyrics.split(' ').slice(0, splitIndex).join(' ')}
 			</h2>
 			<input
+				autoFocus
 				type="text"
 				className={styles.missingLyrics}
 				onChange={handleChange}

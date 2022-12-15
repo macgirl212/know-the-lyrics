@@ -51,6 +51,8 @@ const GameScreen = ({
 			) : (
 				<ConfirmedLyricsBanner
 					currentLyrics={currentLyrics}
+					isEndOfSong={isEndOfSong}
+					revealAnswer={revealAnswer}
 					typeOfLyrics={typeOfLyrics}
 				/>
 			)}

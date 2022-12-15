@@ -2,10 +2,17 @@ import styles from '../styles/Game.module.scss';
 
 type LyricProps = {
 	currentLyrics: string;
+	isEndOfSong: boolean;
+	revealAnswer: any;
 	typeOfLyrics: string;
 };
 
-const ConfirmedLyricsBanner = ({ currentLyrics, typeOfLyrics }: LyricProps) => {
+const ConfirmedLyricsBanner = ({
+	currentLyrics,
+	isEndOfSong,
+	revealAnswer,
+	typeOfLyrics,
+}: LyricProps) => {
 	return (
 		<>
 			{typeOfLyrics === 'final answer' ? (
@@ -14,9 +21,18 @@ const ConfirmedLyricsBanner = ({ currentLyrics, typeOfLyrics }: LyricProps) => {
 					dangerouslySetInnerHTML={{ __html: currentLyrics }}
 				/>
 			) : (
-				<h2 className={`${styles.currentLyrics} ${styles.neutralLyrics}`}>
-					{currentLyrics}
-				</h2>
+				<>
+					{isEndOfSong ? (
+						<h2
+							className={`${styles.currentLyrics} ${styles.clickableLyrics}`}
+							onClick={revealAnswer}
+						>
+							{currentLyrics}
+						</h2>
+					) : (
+						<h2 className={styles.currentLyrics}>{currentLyrics}</h2>
+					)}
+				</>
 			)}
 		</>
 	);

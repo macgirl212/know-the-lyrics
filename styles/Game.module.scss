@@ -28,6 +28,17 @@ $text-color-1: #191102;
         }
     }
 
+    .clickableLyrics {
+        cursor: pointer;
+
+        &:focus,
+        &:hover {
+            outline: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    }
+
     .gameContainer {
         position: relative;
         background-color: $background-color;
