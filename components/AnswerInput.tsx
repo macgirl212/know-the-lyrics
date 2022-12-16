@@ -1,6 +1,7 @@
 import styles from '../styles/Game.module.scss';
 
 type InputProps = {
+	isAnswerToFill: boolean;
 	currentLyrics: string;
 	revealAnswer: any;
 	splitIndex: number;
@@ -9,6 +10,7 @@ type InputProps = {
 };
 
 const AnswerInput = ({
+	isAnswerToFill,
 	currentLyrics,
 	revealAnswer,
 	splitIndex,
@@ -20,8 +22,10 @@ const AnswerInput = ({
 	};
 
 	const handleKeyDown = (event: any) => {
-		if (event.keyCode === 13) {
-			revealAnswer();
+		if (isAnswerToFill) {
+			if (event.keyCode === 13) {
+				revealAnswer();
+			}
 		}
 	};
 	return (

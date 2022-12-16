@@ -2,25 +2,11 @@ import Image from 'next/image';
 import styles from '../styles/Game.module.scss';
 
 type PlayPauseButtonProps = {
-	audioRef: any;
 	isPlaying: boolean;
-	setIsPlaying: any;
+	togglePlay: any;
 };
 
-const PlayPauseButton = ({
-	audioRef,
-	isPlaying,
-	setIsPlaying,
-}: PlayPauseButtonProps) => {
-	const togglePlay = () => {
-		if (isPlaying) {
-			audioRef.current.pause();
-		} else {
-			audioRef.current.play();
-		}
-		setIsPlaying(!isPlaying);
-	};
-
+const PlayPauseButton = ({ isPlaying, togglePlay }: PlayPauseButtonProps) => {
 	return (
 		<a className={styles.gameButtons} onClick={togglePlay}>
 			{isPlaying ? (

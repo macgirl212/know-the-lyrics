@@ -42,6 +42,7 @@ const GameScreen = ({
 			/>
 			{isAnswerToFill ? (
 				<AnswerInput
+					isAnswerToFill={isAnswerToFill}
 					currentLyrics={currentLyrics}
 					revealAnswer={revealAnswer}
 					splitIndex={splitIndex}

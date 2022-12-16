@@ -79,6 +79,34 @@ const Game: NextPage = () => {
 	}, []);
 
 	useEffect(() => {
+		// listens for keypresses to restart, play, and pause song and select input
+		if (isAnswerToFill || typeOfLyrics === 'final answer') {
+			return;
+		}
+		const handleKeyDown = (event: any) => {
+			// "r" restarts song
+			if (event.keyCode === 82) {
+				restartSong();
+			}
+
+			// "p" toggles play and pause
+			if (event.keyCode === 80) {
+				togglePlay();
+			}
+
+			// "enter" selects input
+			if (isEndOfSong && event.keyCode === 13) {
+				revealAnswer();
+			}
+		};
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isAnswerToFill, isPlaying, typeOfLyrics]);
+
+	useEffect(() => {
 		if (typeOfLyrics === 'final answer') {
 			completeASong(currentSong.title);
 		}
@@ -154,6 +182,15 @@ const Game: NextPage = () => {
 		setIsPlaying(true);
 	};
 
+	const togglePlay = () => {
+		if (isPlaying) {
+			audioRef.current.pause();
+		} else {
+			audioRef.current.play();
+		}
+		setIsPlaying(!isPlaying);
+	};
+
 	const revealAnswer = () => {
 		if (isAnswerToFill == false) {
 			// render input to fill user's answer
@@ -219,9 +256,8 @@ const Game: NextPage = () => {
 								</a>
 							) : (
 								<PlayPauseButton
-									audioRef={audioRef}
 									isPlaying={isPlaying}
-									setIsPlaying={setIsPlaying}
+									togglePlay={togglePlay}
 								/>
 							)}
 						</>
