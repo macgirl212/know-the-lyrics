@@ -55,6 +55,11 @@ const SelectSongPage: NextPage = () => {
 						verses={currentSong.verses.length}
 					/>
 					<DifficultyButton
+						difficulty="Medium"
+						hasChorus={currentSong.hasChorus}
+						verses={currentSong.verses.length}
+					/>
+					<DifficultyButton
 						difficulty="Hard"
 						hasChorus={currentSong.hasChorus}
 						verses={currentSong.verses.length}

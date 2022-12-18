@@ -11,6 +11,7 @@ const chooseRandomSongSection = (
 				return Math.floor(Math.random() * 2) - 1;
 			}
 			return 0;
+		case 'Medium':
 		case 'Hard': {
 			if (hasChorus) {
 				return Math.floor(Math.random() * (verses + 1)) - 1;

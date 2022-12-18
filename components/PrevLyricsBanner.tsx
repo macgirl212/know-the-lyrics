@@ -37,6 +37,7 @@ const PrevLyricsBanner = ({
 					) : null}
 				</>
 			) : (
+				/* fix to remove error message after final answer is shown */
 				<p className={styles.errorMessage}>{errorMessage}</p>
 			)}
 		</>

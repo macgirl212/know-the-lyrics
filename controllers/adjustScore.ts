@@ -5,6 +5,11 @@ const adjustScore = (difficulty: string, finalAnswerHTML: any, possibleScore: nu
             const adjustedScore = possibleScore - wrongWords;
             return adjustedScore;
         }
+        case 'medium': {
+            const wrongWords = (finalAnswerHTML.match(/color:red/g) || []).length * 200;
+            const adjustedScore = possibleScore - wrongWords;
+            return adjustedScore;
+        }
         case 'hard': {
             const wrongWords = (finalAnswerHTML.match(/color:red/g) || []).length * 300;
             const adjustedScore = possibleScore - wrongWords;

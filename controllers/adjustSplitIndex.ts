@@ -13,6 +13,9 @@ const adjustSplitIndex = (correctAnswer: string, difficulty: string) => {
                 return easySplitIndex;
             }
             return easySplitIndex + 1
+        case 'medium':
+            // always make at least three words invisible
+            return easySplitIndex;
         case 'hard':
             // if words amount is less than three, adjust to make sure all words are invisible
             if (wordsAmount > Math.abs(easySplitIndex)) {

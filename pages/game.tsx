@@ -142,6 +142,8 @@ const Game: NextPage = () => {
 			correctAnswer.split(' ').slice(adjustedSplitIndex).length * 100;
 		if (difficulty === 'hard') {
 			setPossibleScore(baseScore * 3);
+		} else if (difficulty === 'medium') {
+			setPossibleScore(baseScore * 2);
 		} else {
 			setPossibleScore(baseScore);
 		}
