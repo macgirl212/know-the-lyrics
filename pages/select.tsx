@@ -1,11 +1,19 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import useGlobalStates from '../AppContext';
-import getAllSongs from '../controllers/getSongs';
+
+// components
+import DifficultyButton from '../components/buttons/DifficultyButton';
 import Title from '../components/Title';
-import DifficultyButton from '../components/DifficultyButton';
+
+// controllers
+import getAllSongs from '../controllers/getSongs';
+
+// styles
 import styles from '../styles/Home.module.scss';
+
+// reducer
+import useGlobalStates from '../AppContext';
 
 interface Song {
 	title: string;

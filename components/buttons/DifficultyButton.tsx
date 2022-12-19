@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import useGlobalStates from '../AppContext';
-import chooseRandomSongSection from '../controllers/chooseRandomSongSection';
-import styles from '../styles/Home.module.scss';
+import useGlobalStates from '../../AppContext';
+import chooseRandomSongSection from '../../controllers/chooseRandomSongSection';
+import styles from '../../styles/Home.module.scss';
 
 interface DifficultyButtonProps {
 	difficulty: string;
