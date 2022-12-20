@@ -9,11 +9,11 @@ import Title from '../components/Title';
 // controllers
 import getAllSongs from '../controllers/getSongs';
 
-// styles
-import styles from '../styles/Home.module.scss';
-
 // reducer
 import useGlobalStates from '../AppContext';
+
+// styles
+import styles from '../styles/Home.module.scss';
 
 interface Song {
 	title: string;

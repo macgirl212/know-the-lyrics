@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import useGlobalStates from '../AppContext';
-import styles from '../styles/Game.module.scss';
+import useGlobalStates from '../../AppContext';
+import styles from '../../styles/Game.module.scss';
 
 const AbandonGameButton = () => {
 	const { prevPlayedSongs } = useGlobalStates();

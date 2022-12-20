@@ -1,20 +1,27 @@
 import type { NextPage } from 'next';
 import { useEffect, useState, useRef } from 'react';
-import useGlobalStates from '../AppContext';
+
+// components
+import AbandonGameButton from '../components/buttons/AbandonGameButton';
+import GameScore from '../components/GameScore';
+import GameScreen from '../components/GameScreen';
+import NextSongButton from '../components/buttons/NextSongButton';
+import PlayPauseButton from '../components/buttons/PlayPauseButton';
+import RestartButton from '../components/buttons/RestartButton';
+import Title from '../components/Title';
+
+// controllers
 import adjustScore from '../controllers/adjustScore';
 import adjustSplitIndex from '../controllers/adjustSplitIndex';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import validateAnswer from '../controllers/validateAnswer';
-import styles from '../styles/Game.module.scss';
 
-import AbandonGameButton from '../components/AbandonGameButton';
-import GameScore from '../components/GameScore';
-import GameScreen from '../components/GameScreen';
-import NextSongButton from '../components/NextSongButton';
-import PlayPauseButton from '../components/PlayPauseButton';
-import RestartButton from '../components/RestartButton';
-import Title from '../components/Title';
+// reducer
+import useGlobalStates from '../AppContext';
+
+// styles
+import styles from '../styles/Game.module.scss';
 
 const Game: NextPage = () => {
 	const {

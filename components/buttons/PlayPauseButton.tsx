@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../styles/Game.module.scss';
+import styles from '../../styles/Game.module.scss';
 
 type PlayPauseButtonProps = {
 	isPlaying: boolean;
