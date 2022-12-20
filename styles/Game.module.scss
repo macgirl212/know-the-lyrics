@@ -110,8 +110,9 @@ $text-color-1: #191102;
     .gameButtonsDiv {
         position: absolute;
         display: flex;
-        justify-content: space-around;
-        bottom: 2em;
+        justify-content: center;
+        gap: 20vw;
+        bottom: 1em;
         width: 100vw;
 
         a {
