@@ -15,6 +15,7 @@ import adjustScore from '../controllers/adjustScore';
 import adjustSplitIndex from '../controllers/adjustSplitIndex';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
+import setStartingTime from '../controllers/setStartingTime';
 import validateAnswer from '../controllers/validateAnswer';
 
 // reducer
@@ -38,7 +39,9 @@ const Game: NextPage = () => {
 	const [answer, setAnswer] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
 	const [timestamps, setTimestamps] = useState<string[]>([]);
-	const [startOfSection, setStartOfSection] = useState<number>(0);
+	const [startOfSection, setStartOfSection] = useState<number | undefined>(
+		undefined
+	);
 	const [section, setSection] = useState<string>('');
 
 	// game states
@@ -64,24 +67,18 @@ const Game: NextPage = () => {
 			setLyrics(currentSong.verses[selectedSection]);
 			replaceLyricWithBlanks(currentSong.verses[selectedSection], difficulty);
 			setTimestamps(currentSong.verseTimestamps[selectedSection]);
-
-			if (selectedSection === 0) {
-				// if the first verse is selected, start the audio from the beginning
-				audioRef.current.currentTime = 0;
-			} else {
-				// if another verse is selected, start the audio five seconds before the first lyric
-				setStartOfSection(currentSong.verseTimestamps[selectedSection][0] - 5);
-				audioRef.current.currentTime =
-					currentSong.verseTimestamps[selectedSection][0] - 5;
-			}
 		} else {
 			// if the chorus is selected, start the audio five seconds before the first lyric
 			setLyrics(currentSong.chorus);
 			replaceLyricWithBlanks(currentSong.chorus, difficulty);
 			setTimestamps(currentSong.chorusTimestamps);
-			setStartOfSection(currentSong.chorusTimestamps[0] - 5);
-			audioRef.current.currentTime = currentSong.chorusTimestamps[0] - 5;
 		}
+
+		audioRef.current.currentTime = setStartingTime(
+			currentSong,
+			selectedSection,
+			setStartOfSection
+		);
 		setSubtitle();
 	}, []);
 
