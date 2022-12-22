@@ -16,6 +16,7 @@ import adjustSplitIndex from '../controllers/adjustSplitIndex';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
 import setStartingTime from '../controllers/setStartingTime';
+import setSubtitle from '../controllers/setSubtitle';
 import validateAnswer from '../controllers/validateAnswer';
 
 // reducer
@@ -68,18 +69,19 @@ const Game: NextPage = () => {
 			replaceLyricWithBlanks(currentSong.verses[selectedSection], difficulty);
 			setTimestamps(currentSong.verseTimestamps[selectedSection]);
 		} else {
-			// if the chorus is selected, start the audio five seconds before the first lyric
+			// if the chorus is selected, load the appropriate data
 			setLyrics(currentSong.chorus);
 			replaceLyricWithBlanks(currentSong.chorus, difficulty);
 			setTimestamps(currentSong.chorusTimestamps);
 		}
 
+		// setup initial timestamps
 		audioRef.current.currentTime = setStartingTime(
 			currentSong,
 			selectedSection,
 			setStartOfSection
 		);
-		setSubtitle();
+		setSubtitle(selectedSection, setSection);
 	}, []);
 
 	useEffect(() => {
@@ -115,23 +117,6 @@ const Game: NextPage = () => {
 			completeASong(currentSong.title);
 		}
 	}, [typeOfLyrics]);
-
-	const setSubtitle = () => {
-		switch (selectedSection) {
-			case -1:
-				setSection('Chorus');
-				break;
-			case 0:
-				setSection('1st Verse');
-				break;
-			case 1:
-				setSection('2nd Verse');
-				break;
-			case 2:
-				setSection('3rd Verse');
-				break;
-		}
-	};
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>, difficulty: any) => {
 		// store correct answer
@@ -217,8 +202,7 @@ const Game: NextPage = () => {
 			setIsAnswerToFill(false);
 
 			// adjust score
-			const scoreToAdd = adjustScore(difficulty, finalAnswer, possibleScore);
-			addToScore(scoreToAdd);
+			addToScore(adjustScore(difficulty, finalAnswer, possibleScore));
 		}
 	};
 
