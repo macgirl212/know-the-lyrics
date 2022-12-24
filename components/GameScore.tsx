@@ -1,5 +1,11 @@
-import styles from '../styles/Game.module.scss';
+// controllers
+import formatScore from '../controllers/formatScore';
+
+// reducer
 import useGlobalStates from '../AppContext';
+
+// styles
+import styles from '../styles/Game.module.scss';
 
 type GameScoreProps = {
 	possibleScore: number;
@@ -8,12 +14,9 @@ type GameScoreProps = {
 
 const GameScore = ({ possibleScore, typeOfLyrics }: GameScoreProps) => {
 	const { score } = useGlobalStates();
-	let displayedScore = score.toString();
-	if (displayedScore.length < 4) {
-		for (let i = displayedScore.length; i < 4; i++) {
-			displayedScore = '0' + displayedScore;
-		}
-	}
+
+	// always display four digits in score screen
+	const displayedScore = formatScore(score);
 
 	return (
 		<div className={styles.gameScore}>
