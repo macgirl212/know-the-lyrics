@@ -8,13 +8,22 @@ type GameScoreProps = {
 
 const GameScore = ({ possibleScore, typeOfLyrics }: GameScoreProps) => {
 	const { score } = useGlobalStates();
+	let displayedScore = score.toString();
+	if (displayedScore.length < 4) {
+		for (let i = displayedScore.length; i < 4; i++) {
+			displayedScore = '0' + displayedScore;
+		}
+	}
+
 	return (
 		<div className={styles.gameScore}>
 			<h3>Score:</h3>
 			{typeOfLyrics === 'final answer' ? (
-				<p className={styles.adjustedScoreNumber}>{score}</p>
+				<p className={`${styles.scoreNumber} ${styles.adjustedScoreNumber}`}>
+					{displayedScore}
+				</p>
 			) : (
-				<p className={styles.scoreNumber}>{score}</p>
+				<p className={styles.scoreNumber}>{displayedScore}</p>
 			)}
 			{typeOfLyrics === 'final answer' ? null : (
 				<p className={styles.possibleScore}>+ {possibleScore}</p>
