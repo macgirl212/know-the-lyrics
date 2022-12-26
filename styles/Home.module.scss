@@ -2,7 +2,8 @@
 $accent-color-1: #6F2DBD;
 $accent-color-2: #F6F740;
 $accent-color-3: #A663CC;
-$base-color: #5d5660;
+$base-color: #262426;
+$base-color2: #5d5660;
 $background-color: #C1BFC0;
 $text-color-1: #191102;
 
@@ -21,14 +22,23 @@ $text-color-1: #191102;
 
 .score {
   font-size: 5em;
-  transform: translateY(-1em);
+  transform: translateY(-1.3em);
+  font-family: 'Orbitron', sans-serif;
+  background-color: $text-color-1;
+  text-align: center;
+  width: 3.6em;
+  border-radius: 5px;
+  color: $accent-color-3;
+  text-shadow: 0px 0px 12px $accent-color-1;
 }
 
 .mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $base-color;
+  background-image: linear-gradient(320deg, $base-color, 25%, $base-color2, 50%, $base-color);
+  box-shadow: inset 0px 0px 20px 1px #131313;
+  height: 100vh;
   
   .mainButton {
     font-size: 2.5em;

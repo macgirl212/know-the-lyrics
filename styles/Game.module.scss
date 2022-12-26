@@ -2,7 +2,8 @@
 $accent-color-1: #6F2DBD;
 // $accent-color-2: #F6F740;
 $accent-color-3: #A663CC;
-$base-color: #5d5660;
+$base-color: #262426;
+$base-color2: #5d5660;
 $background-color: #C1BFC0;
 $text-color-1: #191102;
 
@@ -11,7 +12,8 @@ $text-color-1: #191102;
     top: 0;
     left: 0;
     z-index: -1;
-    background-color: $base-color;
+    background-image: linear-gradient(320deg, $base-color, 25%, $base-color2, 50%, $base-color);
+    box-shadow: inset 0px 0px 20px 1px #131313;
     height: 100vh;
     width: 100vw;
 
@@ -47,7 +49,7 @@ $text-color-1: #191102;
         width: 70vw;
         margin: 0 auto;
         padding: 5px;
-        border: 1px solid $text-color-1;
+        border: 5px solid $text-color-1;
         border-radius: 5px;
         box-shadow: 0px 0px 200px 5px $text-color-1 inset;
         display: flex;

@@ -15,16 +15,12 @@ const Home: NextPage = () => {
 	}, []);
 
 	return (
-		<>
-			<header>
-				<h1 className={styles.title}>Know the Lyrics</h1>
-			</header>
-			<main className={styles.mainContainer}>
-				<Link href="/select">
-					<a className={styles.mainButton}>Play</a>
-				</Link>
-			</main>
-		</>
+		<main className={styles.mainContainer}>
+			<h1 className={styles.title}>Know the Lyrics</h1>
+			<Link href="/select">
+				<a className={styles.mainButton}>Play</a>
+			</Link>
+		</main>
 	);
 };
 
