@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import styles from '../styles/Home.module.scss';
-import useGlobalStates from '../AppContext';
+import useGlobalStates from '../context/AppContext';
 
 const Home: NextPage = () => {
 	// @ts-ignore

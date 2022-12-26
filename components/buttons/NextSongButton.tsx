@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import useGlobalStates from '../../AppContext';
+import useGlobalStates from '../../context/AppContext';
 import styles from '../../styles/Game.module.scss';
 
 const NextSongButton = () => {

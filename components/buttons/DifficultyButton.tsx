@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import useGlobalStates from '../../AppContext';
+import useGlobalStates from '../../context/AppContext';
 import chooseRandomSongSection from '../../controllers/chooseRandomSongSection';
 import styles from '../../styles/Home.module.scss';
 

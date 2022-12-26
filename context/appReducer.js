@@ -14,7 +14,7 @@ export const initialState = {
 	score: 0,
 };
 
-const appReducer = (state, action) => {
+export const appReducer = (state, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
@@ -62,5 +62,3 @@ const appReducer = (state, action) => {
 			throw new Error(`No case for type ${type} found in appReducer.`);
 	}
 };
-
-export default appReducer;

@@ -2,7 +2,7 @@
 import formatScore from '../controllers/formatScore';
 
 // reducer
-import useGlobalStates from '../AppContext';
+import useGlobalStates from '../context/AppContext';
 
 // styles
 import styles from '../styles/Game.module.scss';

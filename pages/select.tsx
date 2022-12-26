@@ -10,7 +10,7 @@ import Title from '../components/Title';
 import getAllSongs from '../controllers/getSongs';
 
 // reducer
-import useGlobalStates from '../AppContext';
+import useGlobalStates from '../context/AppContext';
 
 // styles
 import styles from '../styles/Home.module.scss';

@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import styles from '../styles/Home.module.scss';
-import useGlobalStates from '../AppContext';
+import useGlobalStates from '../context/AppContext';
 
 const Scores: NextPage = () => {
 	const { score } = useGlobalStates();
