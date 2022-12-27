@@ -228,6 +228,7 @@ const Game: NextPage = () => {
 					lyricIndex={lyricIndex}
 					lyrics={lyrics}
 					revealAnswer={revealAnswer}
+					setErrorMessage={setErrorMessage}
 					setUserInput={setUserInput}
 					splitIndex={splitIndex}
 					typeOfLyrics={typeOfLyrics}

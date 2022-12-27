@@ -12,8 +12,9 @@ type GameScreenProps = {
 	lyricIndex: number;
 	lyrics: Array<string>;
 	revealAnswer: any;
-	splitIndex: number;
+	setErrorMessage: any;
 	setUserInput: any;
+	splitIndex: number;
 	typeOfLyrics: string;
 	userInput: string;
 };
@@ -26,8 +27,9 @@ const GameScreen = ({
 	lyricIndex,
 	lyrics,
 	revealAnswer,
-	splitIndex,
+	setErrorMessage,
 	setUserInput,
+	splitIndex,
 	typeOfLyrics,
 	userInput,
 }: GameScreenProps) => {
@@ -38,6 +40,7 @@ const GameScreen = ({
 				isEndOfSong={isEndOfSong}
 				lyricIndex={lyricIndex}
 				lyrics={lyrics}
+				setErrorMessage={setErrorMessage}
 				typeOfLyrics={typeOfLyrics}
 			/>
 			{isAnswerToFill ? (
