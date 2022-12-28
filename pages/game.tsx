@@ -15,6 +15,7 @@ import adjustScore from '../controllers/adjustScore';
 import adjustSplitIndex from '../controllers/adjustSplitIndex';
 import chooseLastLineIndex from '../controllers/chooseLastLineIndex';
 import convertWordsToBlanks from '../controllers/convertWordsToBlanks';
+import selectScoreMultiplier from '../controllers/selectScoreMultiplier';
 import setStartingTime from '../controllers/setStartingTime';
 import setSubtitle from '../controllers/setSubtitle';
 import validateAnswer from '../controllers/validateAnswer';
@@ -39,11 +40,11 @@ const Game: NextPage = () => {
 	// song info states
 	const [answer, setAnswer] = useState<string>('');
 	const [lyrics, setLyrics] = useState<string[]>([]);
-	const [timestamps, setTimestamps] = useState<string[]>([]);
+	const [section, setSection] = useState<string>('');
 	const [startOfSection, setStartOfSection] = useState<number | undefined>(
 		undefined
 	);
-	const [section, setSection] = useState<string>('');
+	const [timestamps, setTimestamps] = useState<string[]>([]);
 
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -57,6 +58,7 @@ const Game: NextPage = () => {
 	const [typeOfLyrics, setTypeOfLyrics] = useState<string>('neutral');
 	const [userInput, setUserInput] = useState<string>('');
 
+	// ref for audio element
 	const audioRef = useRef<HTMLAudioElement | undefined>(
 		typeof Audio !== 'undefined' ? new Audio() : undefined
 	);
@@ -127,15 +129,10 @@ const Game: NextPage = () => {
 		const adjustedSplitIndex = adjustSplitIndex(correctAnswer, difficulty);
 		setSplitIndex(adjustedSplitIndex);
 
-		let baseScore =
-			correctAnswer.split(' ').slice(adjustedSplitIndex).length * 100;
-		if (difficulty === 'hard') {
-			setPossibleScore(baseScore * 3);
-		} else if (difficulty === 'medium') {
-			setPossibleScore(baseScore * 2);
-		} else {
-			setPossibleScore(baseScore);
-		}
+		// set possible score with chosen multiplier based on difficulty
+		setPossibleScore(
+			selectScoreMultiplier(correctAnswer, adjustedSplitIndex, difficulty)
+		);
 
 		// convert some words in selected line to blanks
 		const blankLyrics = convertWordsToBlanks(correctAnswer, adjustedSplitIndex);
