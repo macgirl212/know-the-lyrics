@@ -44,7 +44,7 @@ const Game: NextPage = () => {
 	const [startOfSection, setStartOfSection] = useState<number | undefined>(
 		undefined
 	);
-	const [timestamps, setTimestamps] = useState<string[]>([]);
+	const [timestamps, setTimestamps] = useState<number[]>([]);
 
 	// game states
 	const [currentLyrics, setCurrentLyrics] = useState<string>('');
@@ -67,14 +67,13 @@ const Game: NextPage = () => {
 		// initial setup for current song
 		if (selectedSection !== -1) {
 			// if a verse is selected, load the appropriate data
-			setLyrics(currentSong.verses[selectedSection]);
-			replaceLyricWithBlanks(currentSong.verses[selectedSection], difficulty);
-			setTimestamps(currentSong.verseTimestamps[selectedSection]);
+			setupSong(
+				currentSong.verses[selectedSection],
+				currentSong.verseTimestamps[selectedSection]
+			);
 		} else {
 			// if the chorus is selected, load the appropriate data
-			setLyrics(currentSong.chorus);
-			replaceLyricWithBlanks(currentSong.chorus, difficulty);
-			setTimestamps(currentSong.chorusTimestamps);
+			setupSong(currentSong.chorus, currentSong.chorusTimestamps);
 		}
 
 		// setup initial timestamps
@@ -119,6 +118,12 @@ const Game: NextPage = () => {
 			completeASong(currentSong.title);
 		}
 	}, [typeOfLyrics]);
+
+	const setupSong = (section: string[], timestamps: number[]) => {
+		setLyrics(section);
+		replaceLyricWithBlanks(section, difficulty);
+		setTimestamps(timestamps);
+	};
 
 	const replaceLyricWithBlanks = (lyrics: Array<string>, difficulty: any) => {
 		// store correct answer
