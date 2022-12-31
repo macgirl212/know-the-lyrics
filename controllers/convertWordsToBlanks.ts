@@ -1,4 +1,4 @@
-const convertWordsToBlanks = (correctAnswer: string, splitIndex: number) => {
+const convertWordsToBlanks = (correctAnswer: string, splitIndex: number): string => {
     // split correct answer into two arrays
     const answerWordsArray = correctAnswer.split(' ');
     const originalWords = answerWordsArray.slice(0, splitIndex);

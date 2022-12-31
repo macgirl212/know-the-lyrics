@@ -1,4 +1,4 @@
-const adjustSplitIndex = (correctAnswer: string, difficulty: string) => {
+const adjustSplitIndex = (correctAnswer: string, difficulty: string): number => {
     const wordsAmount = correctAnswer.split(' ').length
 
     // easy difficulty removes last three words

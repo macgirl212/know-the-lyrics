@@ -1,4 +1,4 @@
-const setSubtitle = (selectedSection: number, setSection: any) => {
+const setSubtitle = (selectedSection: number, setSection: Function): void => {
     switch (selectedSection) {
         case -1:
             setSection('Chorus');

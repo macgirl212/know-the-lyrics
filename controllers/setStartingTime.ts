@@ -3,7 +3,7 @@ interface Song {
     chorusTimestamps?: number[];
 }
 
-const setStartingTime = (currentSong: Song, selectedSection: number, setStartOfSection: any) => {
+const setStartingTime = (currentSong: Song, selectedSection: number, setStartOfSection: Function): number => {
     switch (selectedSection) {
         // -1 selects chorus
         case -1: {

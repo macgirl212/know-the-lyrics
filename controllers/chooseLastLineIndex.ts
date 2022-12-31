@@ -1,4 +1,4 @@
-const chooseLastLineIndex = (lyrics: Array<string>, difficulty: string) => {
+const chooseLastLineIndex = (lyrics: Array<string>, difficulty: string): number => {
     switch (difficulty) {
         case 'easy':
             // always return at most index 7

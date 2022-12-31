@@ -1,6 +1,5 @@
-const selectScoreMultiplier = (correctAnswer: string, adjustedSplitIndex: number, difficulty: string) => {
+const selectScoreMultiplier = (correctAnswer: string, adjustedSplitIndex: number, difficulty: string): number => {
     let baseScore = correctAnswer.split(' ').slice(adjustedSplitIndex).length * 100;
-    console.log(baseScore)
     switch (difficulty) {
         case "easy": 
             return baseScore;

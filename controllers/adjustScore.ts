@@ -1,4 +1,4 @@
-const adjustScore = (difficulty: string, finalAnswerHTML: any, possibleScore: number) => {
+const adjustScore = (difficulty: string, finalAnswerHTML: string, possibleScore: number): number => {
     switch (difficulty) {
         case 'easy': {
             const wrongWords = (finalAnswerHTML.match(/color:red/g) || []).length * 100;

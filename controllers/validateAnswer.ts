@@ -1,4 +1,4 @@
-const validateAnswer = (answer: string, splitIndex: number, userInput: string) => {
+const validateAnswer = (answer: string, splitIndex: number, userInput: string): string => {
     // regex removes all punctuation marks
     const formattedAnswer: Array<string> = answer.replace(/[^\w +-]/g, '').split(' ');
     const userFormattedAnswer: Array<string> = formattedAnswer.slice(0, splitIndex).concat(userInput.replace(/[^\w +-]/g, '').split(' '))

@@ -125,7 +125,10 @@ const Game: NextPage = () => {
 		setTimestamps(timestamps);
 	};
 
-	const replaceLyricWithBlanks = (lyrics: Array<string>, difficulty: any) => {
+	const replaceLyricWithBlanks = (
+		lyrics: Array<string>,
+		difficulty: string
+	) => {
 		// store correct answer
 		const lastLineIndex = chooseLastLineIndex(lyrics, difficulty);
 		const correctAnswer = lyrics[lastLineIndex];

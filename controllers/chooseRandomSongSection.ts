@@ -2,7 +2,7 @@ const chooseRandomSongSection = (
 	difficulty: string,
 	hasChorus: boolean,
 	verses: number
-) => {
+): number => {
 	// a return of 0 and above chooses verse array by index in nested array
 	// a return of -1 chooses chorus
 	switch (difficulty) {
