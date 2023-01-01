@@ -25,6 +25,7 @@ import useGlobalStates from '../context/AppContext';
 
 // styles
 import styles from '../styles/Game.module.scss';
+import HiddenControls from '../components/HiddenControls';
 
 const Game: NextPage = () => {
 	const {
@@ -214,6 +215,7 @@ const Game: NextPage = () => {
 	return (
 		<>
 			<Title title={currentSong.title} />
+			<HiddenControls />
 			<main className={styles.mainContainer}>
 				<h2 className={styles.subtitle}>{section}</h2>
 				<audio

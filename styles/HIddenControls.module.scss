@@ -1,0 +1,26 @@
+/* VARIABLES */
+// $accent-color-1: #6F2DBD;
+// $accent-color-2: #F6F740;
+// $accent-color-3: #A663CC;
+// $base-color: #262426;
+// $base-color2: #5d5660;
+// $background-color: #C1BFC0;
+$text-color-1: #191102;
+
+.hiddenControls {
+    background-color: yellow;
+    color: $text-color-1;
+    height: 50vh;
+    width: 20em;
+    margin-top: 140px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    button {
+        &:focus,
+        &:hover {
+            
+        }
+    }
+}

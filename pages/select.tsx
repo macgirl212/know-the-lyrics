@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 // components
 import DifficultyButton from '../components/buttons/DifficultyButton';
+import HiddenControls from '../components/HiddenControls';
 import Title from '../components/Title';
 
 // controllers
@@ -55,6 +56,7 @@ const SelectSongPage: NextPage = () => {
 	return (
 		<>
 			<Title title={currentSong.title} />
+			<HiddenControls />
 			<main className={styles.mainContainer}>
 				<div className={styles.difficultyButtonsDiv}>
 					<DifficultyButton
@@ -73,9 +75,6 @@ const SelectSongPage: NextPage = () => {
 						verses={currentSong.verses.length}
 					/>
 				</div>
-				<Link href="/scores">
-					<a>Abandon Game</a>
-				</Link>
 			</main>
 		</>
 	);
