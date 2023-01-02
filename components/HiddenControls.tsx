@@ -10,15 +10,24 @@ const HiddenControls = () => {
 	);
 	const controllerRef = useRef();
 
-	// on focus and/or hover, these special controls appear from bottom left of screen
 	useEffect(() => {
-		if (focused) {
-			setCurrentStyle(`${styles.hiddenControls} ${styles.focused}`);
-			console.log(controllerRef.current);
-		} else {
-			setCurrentStyle(styles.hiddenControls);
-			console.log(controllerRef.current);
-		}
+		// listens for esc key
+		const handleKeyDown = (event: any) => {
+			// "esc" reveals hidden controls
+			if (event.keyCode === 27) {
+				toggleFocused();
+				setFocused(!focused);
+			}
+		};
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [focused]);
+
+	useEffect(() => {
+		toggleFocused();
 	}, [focused]);
 
 	const handleFocus = () => {
@@ -27,6 +36,15 @@ const HiddenControls = () => {
 
 	const handleBlur = () => {
 		setFocused(false);
+	};
+
+	// these special controls appear from bottom left of screen
+	const toggleFocused = () => {
+		if (focused) {
+			setCurrentStyle(`${styles.hiddenControls} ${styles.focused}`);
+		} else {
+			setCurrentStyle(styles.hiddenControls);
+		}
 	};
 
 	return (

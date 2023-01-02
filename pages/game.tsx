@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react';
 import AbandonGameButton from '../components/buttons/AbandonGameButton';
 import GameScore from '../components/GameScore';
 import GameScreen from '../components/GameScreen';
+import HiddenControls from '../components/HiddenControls';
 import NextSongButton from '../components/buttons/NextSongButton';
 import PlayPauseButton from '../components/buttons/PlayPauseButton';
 import RestartButton from '../components/buttons/RestartButton';
@@ -25,7 +26,6 @@ import useGlobalStates from '../context/AppContext';
 
 // styles
 import styles from '../styles/Game.module.scss';
-import HiddenControls from '../components/HiddenControls';
 
 const Game: NextPage = () => {
 	const {
