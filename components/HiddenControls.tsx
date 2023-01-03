@@ -1,6 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 
+// reducer
+import useGlobalStates from '../context/AppContext';
+
+// styles
 import styles from '../styles/Home.module.scss';
 
 const HiddenControls = () => {
@@ -8,6 +12,8 @@ const HiddenControls = () => {
 	const [currentStyle, setCurrentStyle] = useState<string>(
 		styles.hiddenControls
 	);
+	// @ts-ignore
+	const { difficulty, selectDifficulty } = useGlobalStates();
 	const controllerRef = useRef();
 
 	useEffect(() => {
@@ -50,6 +56,19 @@ const HiddenControls = () => {
 	return (
 		<div className={currentStyle} ref={controllerRef}>
 			<h3>Controller</h3>
+			{difficulty !== '' ? (
+				<Link href="/select">
+					<button
+						onClick={() => {
+							selectDifficulty('');
+						}}
+						onFocus={handleFocus}
+						onBlur={handleBlur}
+					>
+						Next Song
+					</button>
+				</Link>
+			) : null}
 			<Link href="/scores">
 				<button onFocus={handleFocus} onBlur={handleBlur}>
 					Abandon Game
