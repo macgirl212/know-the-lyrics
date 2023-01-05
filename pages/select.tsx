@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // components
 import DifficultyButton from '../components/buttons/DifficultyButton';
@@ -36,8 +36,11 @@ const SelectSongPage: NextPage = () => {
 	// @ts-ignore
 	const { currentSong, prevPlayedSongs, selectASong } = useGlobalStates();
 
+	const [allSongs, setAllSongs] = useState<Song[]>();
+
 	useEffect(() => {
 		getAllSongs().then((result) => {
+			setAllSongs(result);
 			chooseRandomSong(result);
 		});
 	}, []);
@@ -56,7 +59,7 @@ const SelectSongPage: NextPage = () => {
 	return (
 		<>
 			<Title title={currentSong.title} />
-			<HiddenControls />
+			<HiddenControls allSongs={allSongs} />
 			<main className={styles.mainContainer}>
 				<div className={styles.difficultyButtonsDiv}>
 					<DifficultyButton

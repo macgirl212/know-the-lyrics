@@ -7,14 +7,30 @@ import useGlobalStates from '../context/AppContext';
 // styles
 import styles from '../styles/Home.module.scss';
 
-const HiddenControls = () => {
+type HiddenControlsProps = {
+	allSongs: any;
+};
+
+const getSongNumbersLimit = (allSongs: any) => {
+	return allSongs.length;
+};
+
+const HiddenControls = ({ allSongs }: HiddenControlsProps) => {
 	const [focused, setFocused] = useState<boolean>();
 	const [currentStyle, setCurrentStyle] = useState<string>(
 		styles.hiddenControls
 	);
+	const [numberList, setNumberList] = useState();
+
 	// @ts-ignore
-	const { difficulty, selectDifficulty } = useGlobalStates();
+	const { difficulty, selectDifficulty, selectASong } = useGlobalStates();
 	const controllerRef = useRef();
+
+	useEffect(() => {
+		if (allSongs) {
+			setNumberList(getSongNumbersLimit(allSongs));
+		}
+	}, [allSongs]);
 
 	useEffect(() => {
 		// listens for esc key
@@ -68,7 +84,12 @@ const HiddenControls = () => {
 						Next Song
 					</button>
 				</Link>
-			) : null}
+			) : (
+				<div className={styles.songSelector}>
+					<input type="number" min="1" max={numberList} />
+					<button>Enter</button>
+				</div>
+			)}
 			<Link href="/scores">
 				<button onFocus={handleFocus} onBlur={handleBlur}>
 					Abandon Game
