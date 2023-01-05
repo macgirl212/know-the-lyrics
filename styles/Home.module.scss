@@ -15,24 +15,29 @@ $text-color-1: #191102;
 }
 
 .hiddenControls {
-  background-color: $text-color-1;
-  height: 15em;
-  width: 20em;
+  background-image: linear-gradient(290deg, $text-color-1, 25%, $base-color2, 50%, $text-color-1);
+  height: 20em;
+  width: 15em;
   margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: -15px -10px 20px $text-color-1, 0px 0px 10px 3px $text-color-1 inset;
   position: absolute;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   transform: translateX(-100%);
   transition: 0.5s;
 
   &:focus,
   &:hover {
-    transform: translateX(0%);
+    transform: translateX(10%);
   }
 }
 
 .focused {
-  transform: translateX(0%);
+  transform: translateX(10%);
 }
 
 .scoreLabel {
