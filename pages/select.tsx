@@ -50,6 +50,7 @@ const SelectSongPage: NextPage = () => {
 		// if this song was not played before, select it
 		if (!prevPlayedSongs.includes(randomSong.title)) {
 			selectASong(randomSong);
+			console.log(randomSong);
 			return;
 		} else {
 			chooseRandomSong(result);
@@ -61,23 +62,25 @@ const SelectSongPage: NextPage = () => {
 			<Title title={currentSong.title} />
 			<HiddenControls allSongs={allSongs} />
 			<main className={styles.mainContainer}>
-				<div className={styles.difficultyButtonsDiv}>
-					<DifficultyButton
-						difficulty="Easy"
-						hasChorus={currentSong.hasChorus}
-						verses={currentSong.verses.length}
-					/>
-					<DifficultyButton
-						difficulty="Medium"
-						hasChorus={currentSong.hasChorus}
-						verses={currentSong.verses.length}
-					/>
-					<DifficultyButton
-						difficulty="Hard"
-						hasChorus={currentSong.hasChorus}
-						verses={currentSong.verses.length}
-					/>
-				</div>
+				{currentSong.title === '' ? null : (
+					<div className={styles.difficultyButtonsDiv}>
+						<DifficultyButton
+							difficulty="Easy"
+							hasChorus={currentSong.hasChorus}
+							verses={currentSong.verses.length}
+						/>
+						<DifficultyButton
+							difficulty="Medium"
+							hasChorus={currentSong.hasChorus}
+							verses={currentSong.verses.length}
+						/>
+						<DifficultyButton
+							difficulty="Hard"
+							hasChorus={currentSong.hasChorus}
+							verses={currentSong.verses.length}
+						/>
+					</div>
+				)}
 			</main>
 		</>
 	);

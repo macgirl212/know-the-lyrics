@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 
+// controllers
+import forceSelectASong from '../controllers/forceSelectASong';
+
 // reducer
 import useGlobalStates from '../context/AppContext';
 
@@ -20,11 +23,12 @@ const HiddenControls = ({ allSongs }: HiddenControlsProps) => {
 	const [currentStyle, setCurrentStyle] = useState<string>(
 		styles.hiddenControls
 	);
-	const [numberList, setNumberList] = useState();
+	const [numberList, setNumberList] = useState<number>();
 
 	// @ts-ignore
 	const { difficulty, selectDifficulty, selectASong } = useGlobalStates();
 	const controllerRef = useRef();
+	const inputRef = useRef();
 
 	useEffect(() => {
 		if (allSongs) {
@@ -86,8 +90,14 @@ const HiddenControls = ({ allSongs }: HiddenControlsProps) => {
 				</Link>
 			) : (
 				<div className={styles.songSelector}>
-					<input type="number" min="1" max={numberList} />
-					<button>Enter</button>
+					<input type="number" min="1" max={numberList} ref={inputRef} />
+					<button
+						onClick={() => {
+							selectASong(forceSelectASong(allSongs, inputRef, numberList));
+						}}
+					>
+						Enter
+					</button>
 				</div>
 			)}
 			<Link href="/scores">
