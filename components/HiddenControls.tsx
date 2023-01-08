@@ -76,35 +76,37 @@ const HiddenControls = ({ allSongs }: HiddenControlsProps) => {
 	return (
 		<div className={currentStyle} ref={controllerRef}>
 			<h3>Controller</h3>
-			{difficulty !== '' ? (
-				<Link href="/select">
-					<button
-						onClick={() => {
-							selectDifficulty('');
-						}}
-						onFocus={handleFocus}
-						onBlur={handleBlur}
-					>
-						Next Song
+			<div className={styles.controllerButtons}>
+				{difficulty !== '' ? (
+					<Link href="/select">
+						<button
+							onClick={() => {
+								selectDifficulty('');
+							}}
+							onFocus={handleFocus}
+							onBlur={handleBlur}
+						>
+							Next Song
+						</button>
+					</Link>
+				) : (
+					<div className={styles.songSelector}>
+						<input type="number" min="1" max={numberList} ref={inputRef} />
+						<button
+							onClick={() => {
+								selectASong(forceSelectASong(allSongs, inputRef, numberList));
+							}}
+						>
+							Enter
+						</button>
+					</div>
+				)}
+				<Link href="/scores">
+					<button onFocus={handleFocus} onBlur={handleBlur}>
+						Abandon Game
 					</button>
 				</Link>
-			) : (
-				<div className={styles.songSelector}>
-					<input type="number" min="1" max={numberList} ref={inputRef} />
-					<button
-						onClick={() => {
-							selectASong(forceSelectASong(allSongs, inputRef, numberList));
-						}}
-					>
-						Enter
-					</button>
-				</div>
-			)}
-			<Link href="/scores">
-				<button onFocus={handleFocus} onBlur={handleBlur}>
-					Abandon Game
-				</button>
-			</Link>
+			</div>
 		</div>
 	);
 };
