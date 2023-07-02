@@ -215,7 +215,7 @@ const Game: NextPage = () => {
 	return (
 		<>
 			<Title title={currentSong.title} />
-			<HiddenControls />
+			{/* <HiddenControls /> */}
 			<main className={styles.mainContainer}>
 				<h2 className={styles.subtitle}>{section}</h2>
 				<audio
